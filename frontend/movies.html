@@ -14,13 +14,29 @@
 </head>
 <body>
     
+    
   <div class="container py-5">
     <div class="text-center mb-4">
       <img src="../images/watchbase.png" alt="Logo" style="height: 80px;" />
+
+     
+<!-- Dieser Block zeigt ein Dropdown-Menü zur Filterung nach Genre oben rechts auf der Seite.  -->
+<div class="d-flex justify-content-end mb-4">
+  <div class="genre-filter-box p-2">
+    <!-- <label for="genreFilter" class="form-label text-white">Genre:</label> -->
+    <select id="genreFilter" class="form-select bg-dark text-white border-secondary">
+      <option value="">Alle Genres</option>
+      <option value="Drama">Drama</option>
+      <option value="Comedy">Comedy</option>
+      <option value="Western">Western</option>
+    </select>
+  </div>
+
+  <!-- Dieser Block zeigt die Seitenüberschrift (aktuell leer) und einen Container für die Filme -->
+</div>
     </div>
     <h1 class="text-center mb-5"> </h1>
     <div class="row" id="movieContainer">
-      <!-- Фильмы появятся здесь -->
     </div>
   </div>
 
@@ -76,49 +92,8 @@
     const movieContainer = document.getElementById("movieContainer");
     const modal = new bootstrap.Modal(document.getElementById("movieModal"));
 
-function generateStars(rating) {
-  const fullStars = Math.floor(rating); 
-  const halfStar = rating % 1 >= 0.5;   
-  const emptyStars = 10 - fullStars - (halfStar ? 1 : 0); 
 
-  return '★'.repeat(fullStars) + (halfStar ? '½' : '') + '☆'.repeat(emptyStars);
-}
-
-    movies.forEach((movie) => {
-      const col = document.createElement("div");
-      col.className = "col-md-4 mb-4";
-
-      col.innerHTML = `
-        <div class="card h-100" data-id="${movie.id}">
-          <img src="${movie.poster}" class="card-img-top" alt="${movie.title}" />
-          <div class="card-body">
-            <h5 class="movie-title">${movie.title}</h5>
-            <p class="movie-meta">
-              <span class="rating">${generateStars(movie.rating)} ${movie.rating}</span> | 
-              <span class="year">${movie.year}</span>
-            </p>
-          </div>
-        </div>
-      `;
-
-      col.addEventListener("click", () => openMovieModal(movie));
-      movieContainer.appendChild(col);
-    });
-
-    function openMovieModal(movie) {
-      document.getElementById("movieModalLabel").textContent = movie.title;
-      document.getElementById("movieDescription").textContent = movie.shortDescription;
-      document.getElementById("movieDirector").textContent = movie.director;
-      document.getElementById("movieGenres").textContent = movie.genres.join(", ");
-      document.getElementById("movieActors").textContent = movie.actors.join(", ");
-      document.getElementById("movieTrailer").src = movie.trailer;
-      modal.show();
-    }
-
-    // Clean trailer iframe on modal hide
-    document.getElementById("movieModal").addEventListener("hidden.bs.modal", () => {
-      document.getElementById("movieTrailer").src = "";
-    });
   </script>
+  <script src="app.js"></script>
 </body>
 </html>

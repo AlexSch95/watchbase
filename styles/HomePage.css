@@ -38,3 +38,9 @@ body {
       color: #f33;
       font-weight: bold;
     }
+
+    .genre-filter-box {
+      background-color: #000;
+      border-radius: 8px;
+      width: 250px;
+}
