@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Filmgalerie</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <style>
+    body {
+      background-color: #111;
+      color: white;
+    }
+
+    .card {
+      background-color: #222;
+      border: 1px solid #444;
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+      cursor: pointer;
+    }
+
+    .movie-title {
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .movie-meta {
+      font-size: 0.9rem;
+    }
+
+    .rating {
+      color: gold;
+    }
+
+    .year {
+      color: #f33;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container py-5">
+    <h1 class="text-center mb-5">🎬 Unsere Filme</h1>
+    <div class="row" id="movieContainer">
+      <!-- Фильмы появятся здесь -->
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="movieModal"
+    tabindex="-1"
+    aria-labelledby="movieModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content bg-dark text-white">
+        <div class="modal-header">
+          <h5 class="modal-title" id="movieModalLabel">Filmtitel</h5>
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            data-bs-dismiss="modal"
+            aria-label="Schließen"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <p id="movieDescription"></p>
+          <h6>Regisseur: <span id="movieDirector"></span></h6>
+          <h6>Genres: <span id="movieGenres"></span></h6>
+          <h6>Schauspieler: <span id="movieActors"></span></h6>
+          <div class="ratio ratio-16x9 mt-3">
+            <iframe
+              id="movieTrailer"
+              src=""
+              allowfullscreen
+              allow="autoplay"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap + Script -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const movies = [ 
+      {id: 1, title: "http://www.newdvdreleasedates.com/images/posters/large/django-unchained-2012-05.jpg", rating: 8.5, year: 2012, genres: ["Dark Comedy","Epic","Period Drama","Western Epic","Comedy","Drama","Western"], director: "Quentin Tarantino", actors: ["Jamie Foxx", "Christoph Waltz", "Leonardo DiCaprio"], trailer: "https://www.youtube.com/embed/0RjoVdtE2nk", shortDescription: "In 1858, a bounty-hunter named King Schultz seeks out a slave named Django and buys him because he needs him to find some men he is looking for. ...", poster: "http://www.newdvdreleasedates.com/images/posters/large/django-unchained-2012-05.jpg" },
+      {id: 2, title: "Schindler's List", rating: 9.0, year: 1993, genres: ["Biography","Drama","History","War"], director: "Steven Spielberg", actors: ["Liam Neeson", "Ben Kingsley", "Ralph Fiennes"], trailer: "https://www.youtube.com/embed/DxcSg6bL2Vg", shortDescription: "Oskar Schindler, a German industrialist and member of the Nazi party, tries to save his Jewish employees after witnessing the persecution of Jews...", poster: "https://image.tmdb.org/t/p/original/m0pV0fmMERzCvPVQbLLrPPLl5q1.jpg" },
+      {id: 3, title: "Fight Club", rating: 8.8, year: 1999, genres: ["Drama","Psychological Thriller"], director: "David Fincher", actors: ["Brad Pitt", "Edward Norton", "Helena Bonham Carter"], trailer: "https://www.youtube.com/embed/QW9wNFpLYiY", shortDescription: "An insomniac office worker and a devil-may-care soapmaker form an underground fight club that evolves into something much more...", poster: "https://image.tmdb.org/t/p/original/8dR7Jd7DOEhU8cZ734Va17NRoZ2.jpg" },
+      {id: 4, title: "Scarface", rating: 8.3, year: 1983, genres: ["Crime","Drama","Thriller"], director: "Brian De Palma", actors: ["Al Pacino", "Michelle Pfeiffer", "Steven Bauer"], trailer: "https://www.youtube.com/embed/lU3EHVMkizc", shortDescription: "In 1980 Miami, a determined Cuban immigrant takes over a drug cartel and succumbs to greed.", poster: "https://www.wallpapersun.com/wp-content/uploads/2023/05/Scarface-Wallpapersun-uighf.jpg" },
+      {id: 5, title: "Saving Private Ryan", rating: 8.6, year: 1998, genres: ["Drama","War"], director: "Steven Spielberg", actors: ["Tom Hanks", "Matt Damon", "Tom Sizemore"], trailer: "https://www.youtube.com/embed/ved8259bfBI", shortDescription: "Following the Normandy Landings, a group of U.S. soldiers go behind enemy lines to retrieve a paratrooper...", poster: "https://posterspy.com/wp-content/uploads/2019/10/Saving_private_ryan_poster_NEW.jpg" }
+    ];
+
+    const movieContainer = document.getElementById("movieContainer");
+    const modal = new bootstrap.Modal(document.getElementById("movieModal"));
+
+    movies.forEach((movie) => {
+      const col = document.createElement("div");
+      col.className = "col-md-4 mb-4";
+
+      col.innerHTML = `
+        <div class="card h-100" data-id="${movie.id}">
+          <img src="${movie.poster}" class="card-img-top" alt="${movie.title}" />
+          <div class="card-body">
+            <h5 class="movie-title">${movie.title}</h5>
+            <p class="movie-meta">
+              <span class="rating">⭐ ${movie.rating}</span> | 
+              <span class="year">${movie.year}</span>
+            </p>
+          </div>
+        </div>
+      `;
+
+      col.addEventListener("click", () => openMovieModal(movie));
+      movieContainer.appendChild(col);
+    });
+
+    function openMovieModal(movie) {
+      document.getElementById("movieModalLabel").textContent = movie.title;
+      document.getElementById("movieDescription").textContent = movie.shortDescription;
+      document.getElementById("movieDirector").textContent = movie.director;
+      document.getElementById("movieGenres").textContent = movie.genres.join(", ");
+      document.getElementById("movieActors").textContent = movie.actors.join(", ");
+      document.getElementById("movieTrailer").src = movie.trailer;
+      modal.show();
+    }
+
+    // Clean trailer iframe on modal hide
+    document.getElementById("movieModal").addEventListener("hidden.bs.modal", () => {
+      document.getElementById("movieTrailer").src = "";
+    });
+  </script>
+</body>
+</html>
