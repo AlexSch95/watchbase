@@ -6,7 +6,7 @@ html {
 }
 
 .background {
-    background-image: url("https://cs.pikabu.ru/post_img/big/2014/01/10/8/1389356550_2080679515.png");
+    background-image: url("images/background.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
