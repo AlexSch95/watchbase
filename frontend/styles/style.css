@@ -3,10 +3,54 @@ html {
     height: 100%;
     font-family: "Rubik", sans-serif;
     color: white;
+    background-color: #111;
 }
 
+.card {
+    background-color: #222;
+    border: 1px solid #444;
+    transition: transform 0.3s;
+}
+
+.card-img-top {
+    height: 600px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.card:hover {
+    transform: scale(1.03);
+    cursor: pointer;
+}
+
+.movie-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: white;
+}
+
+.movie-meta {
+    font-size: 0.9rem;
+}
+
+.rating {
+    color: gold;
+}
+
+.year {
+    color: #f33;
+    font-weight: bold;
+}
+
+.genre-filter-box {
+    background-color: #000;
+    border-radius: 8px;
+    width: 250px;
+}
+
+
 .background {
-    background-image: url("images/background.png");
+    background-image: url("../images/background.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
