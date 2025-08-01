@@ -2,31 +2,32 @@ let movies = [];
 getMovies();
 const movieContainer = document.getElementById("movieContainer");
 const modal = new bootstrap.Modal(document.getElementById("movieModal"));
+const genreFilter = document.getElementById("genreFilter");
 
 
 async function getMovies() {
   try {
     const response = await fetch('http://localhost:3000/api/movies')
-    const moviesFromApi = await response.json();
-    movies = moviesFromApi;
-    console.log("Filme geladen", movies);
     if (!response.ok){
       throw new Error(`HTTP Error: ${response.status}`);
     }
+    const moviesFromApi = await response.json();
+    movies = moviesFromApi;
+    console.log("Filme geladen", movies);
   } catch (error) {
     console.log("Fehler beim Laden", error);
   } finally {
-    displayMovies();
+    displayMovies(movies);
   }
 }
 
 //Durchläuft jedes Filmelement im Array movies.
-function displayMovies() {
-  movies.forEach((movie) => {
+function displayMovies(movieList) {
+  movieList.forEach((movie) => {
     //Erstellt ein div-Element für die Spalte und fügt Bootstrap-Klassen hinzu, damit jede Karte in einem 3-Spalten-Raster angezeigt wird.
     const col = document.createElement("div");
     col.className = "col-md-4 mb-4";
-  
+
     //Fügt der Spalte den HTML-Inhalt für eine Filmkarte hinzu – mit Bild, Titel, Bewertung und Jahr.Fügt der Spalte den HTML-Inhalt für eine Filmkarte hinzu – mit Bild, Titel, Bewertung und Jahr.
     col.innerHTML = `
           <div class="card h-100" data-id="${movie.id}">
@@ -44,50 +45,26 @@ function displayMovies() {
             </div>
           </div>
         `;
-  
+
     //Fügt einen Klick-Event hinzu, um beim Klicken die Detailansicht (Modal) des Films zu öffnen
     col.addEventListener("click", () => openMovieModal(movie));
-  
+
     //Fügt die erstellte Spalte in den Container (movieContainer) ein, sodass sie auf der Seite angezeigt
     movieContainer.appendChild(col);
   });
 }
 
 // Fügt einen Ereignis-Listener (EventListener) zum Dropdown-Menü mit der ID genreFilter hinzu.
-document.getElementById("genreFilter").addEventListener("change", filterMovies);
-
-//Die Funktion filterMovies() filtert die Filme nach dem aktuell ausgewählten Genre im Dropdown-Menü. Danach wird der vorherige Inhalt des Film-Containers gelöscht, und nur die Filme, die zum gewählten Genre passen, werden erneut in Form von Karten angezeigt. Jede Karte zeigt das Poster, den Titel, die Bewertung mit Sternen und das Jahr. Beim Klicken auf eine Karte wird ein Modal mit Details geöffnet.
-function filterMovies() {
-  const selectedGenre = document.getElementById("genreFilter").value;
+genreFilter.addEventListener("change", () =>{
+  //Die Funktion filterMovies() filtert die Filme nach dem aktuell ausgewählten Genre im Dropdown-Menü. Danach wird der vorherige Inhalt des Film-Containers gelöscht, und nur die Filme, die zum gewählten Genre passen, werden erneut in Form von Karten angezeigt. Jede Karte zeigt das Poster, den Titel, die Bewertung mit Sternen und das Jahr. Beim Klicken auf eine Karte wird ein Modal mit Details geöffnet.
+  const selectedGenre = genreFilter.value;
   movieContainer.innerHTML = "";
-
-  const filtered = movies.filter((movie) => {
-    return selectedGenre === "" || movie.genres.includes(selectedGenre);
-  });
-
-  filtered.forEach((movie) => {
-    const col = document.createElement("div");
-    col.className = "col-md-4 mb-4";
-
-    col.innerHTML = `
-      <div class="card h-100" data-id="${movie.id}">
-        <img src="${movie.poster}" class="card-img-top" alt="${movie.title}" />
-        <div class="card-body">
-          <h5 class="movie-title">${movie.title}</h5>
-          <p class="movie-meta">
-            <span class="rating">${generateStars(movie.rating)} ${
-      movie.rating
-    }</span> |
-            <span class="year">${movie.year}</span>
-          </p>
-        </div>
-      </div>
-    `;
-
-    col.addEventListener("click", () => openMovieModal(movie));
-    movieContainer.appendChild(col);
-  });
-}
+  let filtered = movies;
+  if (selectedGenre !== "all") {
+    filtered = movies.filter((movie) => movie.genres.includes(selectedGenre));
+  }
+  displayMovies(filtered);
+});
 
 //Die Funktion generateStars(rating) erstellt eine visuelle Darstellung der Bewertung eines Films mit Sternen. Sie berechnet, wie viele volle Sterne, halbe Sterne und leere Sterne angezeigt werden sollen, basierend auf einer Bewertungsskala von 0 bis 10. Das Ergebnis ist eine Zeichenkette mit Symbolen, die die Bewertung grafisch darstellen.
 function generateStars(rating) {
@@ -129,6 +106,3 @@ function handleEmail() {
   // Email übergang auf die nächste Seite
   window.location.href = "movies.html";
 }
-
-//Dieser Funktionsaufruf startet die Filterfunktion, um passende Filme auf der Seite anzuzeigen – entweder beim ersten Laden oder nach einer Änderung des Filters.
-filterMovies();
