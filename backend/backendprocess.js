@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const cors = require("cors");
 const { connectToDatabase } = require("./db.js");
+const bcrypt = require("bcrypt");
 
 const app = express();
 
@@ -125,7 +126,7 @@ app.get("/api/movies", async (req, res) => {
     const connection = await connectToDatabase();
 
     const [rows] = await connection.execute(`
-        SELECT 
+        SELECT
             m.movie_id AS id,
             m.title,
             m.release_year AS year,
@@ -136,13 +137,13 @@ app.get("/api/movies", async (req, res) => {
             m.trailer_url AS trailer,
             GROUP_CONCAT(DISTINCT g.genre_name SEPARATOR ', ') AS genres,
             GROUP_CONCAT(DISTINCT a.actor_name SEPARATOR ', ') AS actors
-        FROM 
+        FROM
             movies m
         LEFT JOIN movies_with_genres mg ON m.movie_id = mg.movie_id
         LEFT JOIN genres g ON mg.genre_id = g.genre_id
         LEFT JOIN movies_with_actors ma ON m.movie_id = ma.movie_id
         LEFT JOIN actors a ON ma.actor_id = a.actor_id
-        GROUP BY 
+        GROUP BY
             m.movie_id, m.title, m.release_year, m.director;
       `);
       await connection.end();
@@ -166,6 +167,63 @@ app.get("/api/movies", async (req, res) => {
 //   }
 //   res.status(200).json(movie);
 // });
+
+app.post("/api/users/login", async (req, res) => {
+  try {
+    // Username und Passwort auslesen
+    const {username, password} = req.body;
+    if (username === undefined || password === undefined) {
+      return res.status(400).json({ error: "Username oder Passwort nicht übergeben." });
+    }
+    const connection = await connectToDatabase();
+    // Überprüfe, ob Username existiert
+    const [existingUsers] = await connection.execute(
+      'SELECT * FROM users WHERE user_name = ?', [username]
+    );
+    await connection.end();
+    if (existingUsers.length === 0) {
+        return res.status(404).json({ error: "Username existiert nicht." });
+    }
+    // existingUsers = [user0, user1, ...]
+    const passwordHash = existingUsers[0].password_hash;
+    // Ab hier: Passwort-Hash überprüfen
+    const passwordCorrect = await bcrypt.compare(password, passwordHash);
+    if (passwordCorrect === false) {
+      return res.status(401).json({error: "Passwort nicht korrekt."});
+    }
+    res.status(200).json({message: `User ${username} erfolgreich eingeloggt.`})
+  } catch (error) {
+    return res.status(500).json({ error: "Fehler beim überprüfen des Passworts." });
+  }
+});
+
+app.post("/api/users/register", async (req, res) => {
+  try {
+    // Username und Passwort auslesen
+    const {username, password} = req.body;
+    if (username === undefined || password === undefined) {
+      return res.status(400).json({ error: "Username oder Passwort nicht übergeben." });
+    }
+    const connection = await connectToDatabase();
+    // Überprüfe, ob Username schon vergeben
+    const [existingUsers] = await connection.execute(
+      'SELECT * FROM users WHERE user_name = ?', [username]
+    );
+    if (existingUsers.length > 0) {
+        return res.status(500).json({ error: "Username existiert schon." });
+    }
+    // Ab hier: User erstellen
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const [newUser] = await connection.execute(
+      'INSERT INTO users (user_name, password_hash) VALUES (?, ?)', [username, hashedPassword]
+    );
+    await connection.end();
+    res.status(201).json({message: `User ${username} erfolgreich erstellt.`})
+  } catch (error) {
+    return res.status(500).json({ error: "Fehler beim Erstellen des Users." });
+  }
+});
 
 app.listen(3000, () => {
   console.log("Server läuft auf http://localhost:3000");
