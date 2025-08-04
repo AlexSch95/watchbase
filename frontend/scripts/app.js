@@ -81,8 +81,8 @@ function openMovieModal(movie) {
   document.getElementById("movieDescription").textContent =
     movie.shortDescription;
   document.getElementById("movieDirector").textContent = movie.director;
-  document.getElementById("movieGenres").textContent = movie.genres.join(", ");
-  document.getElementById("movieActors").textContent = movie.actors.join(", ");
+  document.getElementById("movieGenres").textContent = movie.genres;
+  document.getElementById("movieActors").textContent = movie.actors;
   document.getElementById("movieTrailer").src = movie.trailer;
   modal.show();
 }
