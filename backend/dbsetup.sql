@@ -13,7 +13,7 @@ CREATE TABLE movies (
     short_description VARCHAR(1022) NOT NULL,
     trailer_url VARCHAR(255) NOT NULL,
     poster VARCHAR(255) NOT NULL,
-    rating FLOAT NOT NULL
+    rating DECIMAL(3,1) NOT NULL
 );
 
 -- Tabelle für Genres und Genre zurodnung erstellen
@@ -169,3 +169,24 @@ INSERT INTO movies_with_actors (movie_id, actor_id) VALUES
 (6, 11),  -- Lea Thompson
 (6, 6),   -- Claudia Wells
 (6, 19);  -- Thomas F. Wilson
+
+
+SELECT 
+    m.movie_id AS id,
+    m.title,
+    m.release_year AS year,
+    m.director,
+    m.rating,
+    m.short_description AS shortDescription,
+    m.poster,
+    m.trailer_url AS trailer,
+    GROUP_CONCAT(DISTINCT g.genre_name SEPARATOR ', ') AS genres,
+    GROUP_CONCAT(DISTINCT a.actor_name SEPARATOR ', ') AS actors
+FROM 
+    movies m
+LEFT JOIN movies_with_genres mg ON m.movie_id = mg.movie_id
+LEFT JOIN genres g ON mg.genre_id = g.genre_id
+LEFT JOIN movies_with_actors ma ON m.movie_id = ma.movie_id
+LEFT JOIN actors a ON ma.actor_id = a.actor_id
+GROUP BY 
+    m.movie_id, m.title, m.release_year, m.director;
