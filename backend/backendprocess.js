@@ -168,9 +168,36 @@ app.get("/api/movies", async (req, res) => {
 //   res.status(200).json(movie);
 // });
 
-// app.get("api/users")
+app.post("/api/users/login", async (req, res) => {
+  try {
+    // Username und Passwort auslesen
+    const {username, password} = req.body;
+    if (username === undefined || password === undefined) {
+      return res.status(400).json({ error: "Username oder Passwort nicht übergeben." });
+    }
+    const connection = await connectToDatabase();
+    // Überprüfe, ob Username existiert
+    const [existingUsers] = await connection.execute(
+      'SELECT * FROM users WHERE user_name = ?', [username]
+    );
+    await connection.end();
+    if (existingUsers.length === 0) {
+        return res.status(404).json({ error: "Username existiert nicht." });
+    }
+    // existingUsers = [user0, user1, ...]
+    const passwordHash = existingUsers[0].password_hash;
+    // Ab hier: Passwort-Hash überprüfen
+    const passwordCorrect = await bcrypt.compare(password, passwordHash);
+    if (passwordCorrect === false) {
+      return res.status(401).json({error: "Passwort nicht korrekt."});
+    }
+    res.status(200).json({message: `User ${username} erfolgreich eingeloggt.`})
+  } catch (error) {
+    return res.status(500).json({ error: "Fehler beim überprüfen des Passworts." });
+  }
+});
 
-app.post("/api/users", async (req, res) => {
+app.post("/api/users/register", async (req, res) => {
   try {
     // Username und Passwort auslesen
     const {username, password} = req.body;
