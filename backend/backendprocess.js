@@ -153,19 +153,19 @@ app.get("/api/movies", async (req, res) => {
   }
 });
 
-app.get("/api/movies/:id", (req, res) => {
-  const idFromUrl = parseInt(req.params.id);
-  if (isNaN(idFromUrl)) {
-    return res.status(400).json({ message: "ID nicht im korrekten Format" });
-  }
-  const movie = movies.find((m) => m.id === idFromUrl);
-  if (movie === undefined) {
-    return res
-      .status(404)
-      .json({ message: "ID nicht existent. Bitte gib eine vorhandene ein." });
-  }
-  res.status(200).json(movie);
-});
+// app.get("/api/movies/:id", (req, res) => {
+//   const idFromUrl = parseInt(req.params.id);
+//   if (isNaN(idFromUrl)) {
+//     return res.status(400).json({ message: "ID nicht im korrekten Format" });
+//   }
+//   const movie = movies.find((m) => m.id === idFromUrl);
+//   if (movie === undefined) {
+//     return res
+//       .status(404)
+//       .json({ message: "ID nicht existent. Bitte gib eine vorhandene ein." });
+//   }
+//   res.status(200).json(movie);
+// });
 
 app.listen(3000, () => {
   console.log("Server läuft auf http://localhost:3000");

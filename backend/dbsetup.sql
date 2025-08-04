@@ -13,7 +13,7 @@ CREATE TABLE movies (
     short_description VARCHAR(1022) NOT NULL,
     trailer_url VARCHAR(255) NOT NULL,
     poster VARCHAR(255) NOT NULL,
-    rating FLOAT NOT NULL
+    rating DECIMAL(3,1) NOT NULL
 );
 
 -- Tabelle für Genres und Genre zurodnung erstellen
