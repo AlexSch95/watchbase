@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 
-const secretKey = process.env.SECRET_KEY
+const secretKey = process.env.JWT_SECRET
 
 // const movies = [
 //   {
@@ -196,7 +196,11 @@ app.post("/api/users/login", async (req, res) => {
     if (passwordCorrect === false) {
       return res.status(401).json({error: "Passwort nicht korrekt."});
     }
-    const token = jwt.sign(user.user_id, secretKey,{ expiresIn: '1h' });
+    const token = jwt.sign(
+      { userId: user.user_id },  // Payload muss ein Objekt sein
+      secretKey,
+      { expiresIn: '1h' }
+    );
     console.log(token);
 
     res.status(200).json({
