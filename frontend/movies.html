@@ -38,19 +38,30 @@
 
 
         <!-- Dieser Block zeigt ein Dropdown-Menü zur Filterung nach Genre oben rechts auf der Seite.  -->
-        <div class="d-flex justify-content-end mb-4">
-          <div class="genre-filter-box p-2">
-            <!-- <label for="genreFilter" class="form-label text-white">Genre:</label> -->
-            <select
-              id="genreFilter"
-              class="form-select bg-dark text-white border-secondary">
-              <option value="all">Alle Genres</option>
-              <option value="Drama">Drama</option>
-              <option value="Comedy">Comedy</option>
-              <option value="Western">Western</option>
-            </select>
-          </div>
+   <div class="d-flex justify-content-end mb-4">
+           <div class="d-flex genre-filter-box p-2">
+             <!-- <label for="genreFilter" class="form-label text-white">Genre:</label> -->
+             <select
+               id="genreFilter"
+               class="form-select bg-dark text-white border-secondary m-">
+               <option value="all">Alle Genres</option>
+               <option value="Drama">Drama</option>
+               <option value="Comedy">Comedy</option>
+               <option value="Western">Western</option>
+             </select> 
+             <input id="titleSearch" type="text" class="form-control bg-dark text-white border-secondary"
+              placeholder="Suche nach Filmtitel..." style="width: 235px;">
+           </div>  
 
+             <!-- <div class="genre-filter-box p-2">
+                <input 
+                  type="text" 
+                  id="titleSearch" 
+                  class="form-control bg-dark text-white border-secondary" 
+                  placeholder=" Suche nach Filmtitel..." />
+              </div>
+            </div> -->
+                   
           <!-- Dieser Block zeigt die Seitenüberschrift (aktuell leer) und einen Container für die Filme -->
         </div>
       </div>

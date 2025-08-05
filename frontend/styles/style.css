@@ -14,13 +14,20 @@ html {
     background-color: #222;
     border: 1px solid #444;
     transition: transform 0.3s;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+
 }
 
 .card-img-top {
-    height: 600px;
+    height: 800px;
     object-fit: cover;
     width: 100%;
 }
+
+
+
 
 .card:hover {
     transform: scale(1.03);
@@ -49,7 +56,12 @@ html {
 .genre-filter-box {
     background-color: #000;
     border-radius: 8px;
-    width: 250px;
+    /* width: 250px; */
+    margin-left: 30px;
+}
+
+#genreFilter{
+  margin-right: 8px;
 }
 
 
