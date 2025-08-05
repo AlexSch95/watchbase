@@ -120,9 +120,31 @@ app.post("/api/users/register", async (req, res) => {
   }
 });
 
-// app.get('/api/movies/user/:id', authenticateToken, (req, res) => {
-// ///asdfasdf
-// });
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+
+  if (token == null) return res.sendStatus(401);
+  try {
+    const decoded = jwt.verify(token, secretKey);
+    console.log(decoded);
+    req.user = decoded.username;
+    req.id = decoded.id;
+    console.log(req.user);
+    next();
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+}
+
+app.get("/api/movies/user", authenticateToken, (req, res) => {
+  console.log(req.user);
+  console.log(req.id);
+  const user = req.user;
+  console.log(`user: ${user}`);
+  res.status(200).json({message: `Filme für ${user} erfolgreich aufgerufen.`});
+});
 
 
 
