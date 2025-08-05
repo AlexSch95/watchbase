@@ -16,6 +16,8 @@ async function login() {
     const {token} = await response.json();
     console.log(token);
     localStorage.setItem('jwttoken', token);
+    window.location.href = "movies.html";
+
   } catch (error) {
     console.log('AAAAAAAAAA');
     console.error(error);
