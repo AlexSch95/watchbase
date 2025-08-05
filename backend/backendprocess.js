@@ -5,12 +5,15 @@ const cors = require("cors");
 const { connectToDatabase } = require("./db.js");
 const bcrypt = require("bcrypt");
 require('dotenv').config()
+const jwt=require("jsonwebtoken")
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
+
+const secretKey = process.env.SECRET_KEY
 
 // const movies = [
 //   {
@@ -186,13 +189,22 @@ app.post("/api/users/login", async (req, res) => {
         return res.status(404).json({ error: "Username existiert nicht." });
     }
     // existingUsers = [user0, user1, ...]
-    const passwordHash = existingUsers[0].password_hash;
+    const user = existingUsers[0];
+    const passwordHash = user.password_hash;
     // Ab hier: Passwort-Hash überprüfen
     const passwordCorrect = await bcrypt.compare(password, passwordHash);
     if (passwordCorrect === false) {
       return res.status(401).json({error: "Passwort nicht korrekt."});
     }
-    res.status(200).json({message: `User ${username} erfolgreich eingeloggt.`})
+    const token = jwt.sign(user.user_id, secretKey,{ expiresIn: '1h' });
+    console.log(token);
+
+    res.status(200).json({
+      message: `User ${username} erfolgreich eingeloggt.`,
+      token: token,
+      userId: user.user_id
+    })
+
   } catch (error) {
     return res.status(500).json({ error: "Fehler beim überprüfen des Passworts." });
   }
