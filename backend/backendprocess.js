@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const { connectToDatabase } = require("./db.js");
 const bcrypt = require("bcrypt");
+require('dotenv').config()
 
 const app = express();
 
