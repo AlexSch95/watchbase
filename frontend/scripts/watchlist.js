@@ -1,6 +1,7 @@
 let userMoviesFromApi = [];
 getUserMovies();
 const watchlistContainer = document.getElementById("watchlist");
+const modal = new bootstrap.Modal(document.getElementById("movieModal"));
 const watchedContainer = document.getElementById("watched");
 
 
@@ -30,7 +31,7 @@ function displayUserMovies(movieList) {
 
     //Fügt der Spalte den HTML-Inhalt für eine Filmkarte hinzu – mit Bild, Titel, Bewertung und Jahr.Fügt der Spalte den HTML-Inhalt für eine Filmkarte hinzu – mit Bild, Titel, Bewertung und Jahr.
     col.innerHTML = `
-          <div class="card h-100" data-id="${movie.id}">
+          <div class="card h-100" data-id="${movie.movie_id}">
             <img src="${movie.poster}" class="card-img-top" alt="${
       movie.title
     }" />
@@ -40,7 +41,7 @@ function displayUserMovies(movieList) {
                 <span class="rating">${generateStars(movie.rating)} ${
       movie.rating
     }</span> |
-                <span class="year">${movie.year}</span>
+                <span class="year">${movie.release_year}</span>
               </p>
               <div class="d-flex justify-content-end">
                 <a href="#" class="btn btn-danger" style="width: 50px">👁️</a>
@@ -55,10 +56,10 @@ function displayUserMovies(movieList) {
 
     //Fügt die erstellte Spalte in den Container (movieContainer) ein, sodass sie auf der Seite angezeigt
     switch (movie.watched_status){
-      case "1":
+      case 1:
         watchedContainer.appendChild(col);
         break;
-      case "0":
+      case 0:
         watchlistContainer.appendChild(col);
         break;
     }
@@ -80,7 +81,7 @@ function openMovieModal(movie) {
   document.getElementById("movieDirector").textContent = movie.director;
   document.getElementById("movieGenres").textContent = movie.genres;
   document.getElementById("movieActors").textContent = movie.actors;
-  document.getElementById("movieTrailer").src = movie.trailer;
+  document.getElementById("movieTrailer").src = movie.trailer_url;
   modal.show();
 }
 

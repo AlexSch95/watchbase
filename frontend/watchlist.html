@@ -56,13 +56,15 @@
       </div>
       <div class="p-5 rounded shadow mb-5">
     <ul id="myTab2" class="nav nav-tabs nav-pills with-arrow lined flex-column flex-sm-row text-center" role="tablist">
-        <li class="nav-item flex-sm-fill"><a id="watchlist-tab" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 active" data-bs-toggle="tab" href="#watchlist" role="tab" aria-controls="home2" aria-selected="true">Watchlist</a></li>
-        <li class="nav-item flex-sm-fill"><a id="watched-tab" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0" data-bs-toggle="tab" href="#watched" role="tab" aria-controls="profile2" aria-selected="false">Bereits gesehen</a></li>
+        <li class="nav-item flex-sm-fill"><a id="watchlist-tab" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 active" data-bs-toggle="tab" href="#watchlistTab" role="tab" aria-controls="home2" aria-selected="true">Watchlist</a></li>
+        <li class="nav-item flex-sm-fill"><a id="watched-tab" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0" data-bs-toggle="tab" href="#watchedTab" role="tab" aria-controls="profile2" aria-selected="false">Bereits gesehen</a></li>
     </ul>
     <div id="myTab2Content" class="tab-content">
-        <div id="watchlist" class="tab-pane fade px-4 py-5 show active" role="tabpanel">
+        <div id="watchlistTab" class="tab-pane fade px-4 py-5 show active row" role="tabpanel">
+          <div id="watchlist" class="row"></div>
         </div>
-        <div id="watched" class="tab-pane fade px-4 py-5" role="tabpanel">
+        <div id="watchedTab" class="tab-pane fade px-4 py-5 row" role="tabpanel">
+          <div id="watched" class="row"></div>
         </div>
     </div>
 </div>
