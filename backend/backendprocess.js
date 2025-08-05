@@ -122,15 +122,15 @@ app.post("/api/users/register", async (req, res) => {
 
 function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
+  if (!authHeader){
+    return res.status(401).json({ error: "Kein Token" });
+  }
+  const token = authHeader.split(" ")[1];
 
-  if (token == null) return res.sendStatus(401);
   try {
     const decoded = jwt.verify(token, secretKey);
-    console.log(decoded);
     req.user = decoded.username;
     req.id = decoded.id;
-    console.log(req.user);
     next();
   } catch (error) {
     console.error(error);
@@ -138,14 +138,43 @@ function authenticateToken(req, res, next) {
   }
 }
 
-app.get("/api/movies/user", authenticateToken, (req, res) => {
-  console.log(req.user);
-  console.log(req.id);
-  const user = req.user;
-  console.log(`user: ${user}`);
-  res.status(200).json({message: `Filme für ${user} erfolgreich aufgerufen.`});
-});
+app.get("/api/movies/user", authenticateToken, async (req, res) => {
+  try {
+    const connection = await connectToDatabase();
+    const [rows] = await connection.execute(
+      `SELECT
+          m.movie_id,
+          m.title,
+          m.release_year,
+          m.director,
+          m.short_description,
+          m.trailer_url,
+          m.poster,
+          m.rating,
+          um.watched_status,
+          GROUP_CONCAT(DISTINCT g.genre_name SEPARATOR ', ') AS genres,
+          GROUP_CONCAT(DISTINCT a.actor_name SEPARATOR ', ') AS actors
+      FROM
+          user_movies um
+      JOIN movies m ON um.movie_id = m.movie_id
+      LEFT JOIN movies_with_genres mg ON m.movie_id = mg.movie_id
+      LEFT JOIN genres g ON mg.genre_id = g.genre_id
+      LEFT JOIN movies_with_actors ma ON m.movie_id = ma.movie_id
+      LEFT JOIN actors a ON ma.actor_id = a.actor_id
+      WHERE
+          um.user_id = ?
+      GROUP BY
+          m.movie_id, m.title, m.release_year, m.director, m.short_description,
+          m.trailer_url, m.poster, m.rating, um.watched_status;`,
+      [req.id]
+    );
+      await connection.end();
+      res.status(200).json(rows);
+  } catch (error) {
+    res.status(500).json({error: "Fehler beim Laden der Filme"});
 
+  }
+});
 
 
 app.listen(3000, () => {
