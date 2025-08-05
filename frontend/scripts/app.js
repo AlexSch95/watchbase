@@ -1,5 +1,7 @@
 let movies = [];
+let genres = [];
 getMovies();
+getGenres();
 const movieContainer = document.getElementById("movieContainer");
 const modal = new bootstrap.Modal(document.getElementById("movieModal"));
 const genreFilter = document.getElementById("genreFilter");
@@ -19,6 +21,32 @@ async function getMovies() {
   } finally {
     displayMovies(movies);
   }
+}
+
+async function getGenres() {
+  try {
+    const response = await fetch('http://localhost:3000/api/genres')
+    if (!response.ok) {
+      throw new Error(`HTTP Error: ${response.status}`);
+    }
+    const genresFromApi = await response.json();
+    genres = genresFromApi;
+    console.log("Genres geladen", genres)
+  } catch (error) {
+    console.log("Fehler beim Laden", error);
+  } finally {
+    fillGenreFilter(genres);
+  }
+}
+
+function fillGenreFilter(genres) {
+  genres.forEach((genre) => {
+    const filterEntry = document.createElement("option");
+    filterEntry.value = genre.genre_name;
+    filterEntry.innerHTML = `${genre.genre_name}`;
+    genreFilter.appendChild(filterEntry);
+    // <option value="Drama">Drama</option>
+  })
 }
 
 //Durchläuft jedes Filmelement im Array movies.
