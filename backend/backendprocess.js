@@ -120,9 +120,9 @@ app.post("/api/users/register", async (req, res) => {
   }
 });
 
-app.get('/api/movies/user/:id', authenticateToken, (req, res) => {
-///asdfasdf
-});
+// app.get('/api/movies/user/:id', authenticateToken, (req, res) => {
+// ///asdfasdf
+// });
 
 
 
