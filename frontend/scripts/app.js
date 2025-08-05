@@ -42,9 +42,13 @@ function displayMovies(movieList) {
     }</span> |
                 <span class="year">${movie.year}</span>
               </p>
+              <div class="d-flex justify-content-end">
+                <a href="#" class="btn btn-danger" style="width: 50px">👁️</a>
+                <a href="#" class="btn btn-danger" style="width: 50px">⛉</a>
+              </div>
             </div>
           </div>
-        `;
+                  `;
 
     //Fügt einen Klick-Event hinzu, um beim Klicken die Detailansicht (Modal) des Films zu öffnen
     col.addEventListener("click", () => openMovieModal(movie));
