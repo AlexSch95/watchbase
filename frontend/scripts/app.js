@@ -63,13 +63,13 @@ function displayMovies(movieList) {
 
 //Filtres neue
 function applyFilters() {
-  const selectedGenre = genreFilter.value.toLowerCase();
+  const selectedGenre = genreFilter.value;
   const searchTitle = titleSearch.value.trim().toLowerCase();
 
   let filtered = movies;
 
   if (selectedGenre !== "all") {
-    filtered = filtered.filter(movie => movie.genres.toLowerCase().includes(selectedGenre));
+    filtered = filtered.filter(movie => movie.genres.includes(selectedGenre));
   }
 
   if (searchTitle !== "") {
@@ -81,20 +81,6 @@ function applyFilters() {
 
 genreFilter.addEventListener("change", applyFilters);
 titleSearch.addEventListener("input", applyFilters);
-
-// Fügt einen Ereignis-Listener (EventListener) zum Dropdown-Menü mit der ID genreFilter hinzu.
-genreFilter.addEventListener("change", () =>{
-  //Die Funktion filterMovies() filtert die Filme nach dem aktuell ausgewählten Genre im Dropdown-Menü. Danach wird der vorherige Inhalt des Film-Containers gelöscht, und nur die Filme, die zum gewählten Genre passen, werden erneut in Form von Karten angezeigt. Jede Karte zeigt das Poster, den Titel, die Bewertung mit Sternen und das Jahr. Beim Klicken auf eine Karte wird ein Modal mit Details geöffnet.
-  const selectedGenre = genreFilter.value;
-  movieContainer.innerHTML = "";
-  let filtered = movies;
-  if (selectedGenre !== "all") {
-    filtered = movies.filter((movie) => movie.genres.includes(selectedGenre));
-  }
-  displayMovies(filtered);
-});
-
-
 
 //Die Funktion generateStars(rating) erstellt eine visuelle Darstellung der Bewertung eines Films mit Sternen. Sie berechnet, wie viele volle Sterne, halbe Sterne und leere Sterne angezeigt werden sollen, basierend auf einer Bewertungsskala von 0 bis 10. Das Ergebnis ist eine Zeichenkette mit Symbolen, die die Bewertung grafisch darstellen.
 function generateStars(rating) {
