@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Filmgalerie</title>
+    <title>Watchbase: Meine Watchlist</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet" />
@@ -26,6 +26,9 @@
             <a class="nav-link" href="movies.html">Filme</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="watchlist.html">Watchlist</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="login.html">Anmeldung</a>
           </li>
         </ul>
@@ -34,13 +37,9 @@
   </nav>
 
     <div class="container py-5">
-      <div class="text-center mb-4">
-
-
-        <!-- Dieser Block zeigt ein Dropdown-Menü zur Filterung nach Genre oben rechts auf der Seite.  -->
+      <!-- <div class="text-center mb-4">
         <div class="d-flex justify-content-end mb-4">
           <div class="genre-filter-box p-2">
-            <!-- <label for="genreFilter" class="form-label text-white">Genre:</label> -->
             <select
               id="genreFilter"
               class="form-select bg-dark text-white border-secondary">
@@ -50,10 +49,8 @@
               <option value="Western">Western</option>
             </select>
           </div>
-
-          <!-- Dieser Block zeigt die Seitenüberschrift (aktuell leer) und einen Container für die Filme -->
         </div>
-      </div>
+      </div> -->
       <div class="p-5 rounded shadow mb-5">
     <ul id="myTab2" class="nav nav-tabs nav-pills with-arrow lined flex-column flex-sm-row text-center" role="tablist">
         <li class="nav-item flex-sm-fill"><a id="watchlist-tab" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 active" data-bs-toggle="tab" href="#watchlistTab" role="tab" aria-controls="home2" aria-selected="true">Watchlist</a></li>
@@ -61,10 +58,24 @@
     </ul>
     <div id="myTab2Content" class="tab-content">
         <div id="watchlistTab" class="tab-pane fade px-4 py-5 show active row" role="tabpanel">
-          <div id="watchlist" class="row"></div>
+          <div id="watchlist" class="row">
+            <div class="row justify-content-center">
+              <div class="col-md-8 text-center mt-5">
+                <p class="mb-4">Sie sind nicht angemeldet. Um die Watchlist nutzen zu können müssen Sie sich anmelden oder ein Konto erstellen.</p>
+                <a href="login.html" class="btn btn-danger">Zur Anmeldung</a>
+              </div>
+            </div>
+          </div>
         </div>
         <div id="watchedTab" class="tab-pane fade px-4 py-5 row" role="tabpanel">
-          <div id="watched" class="row"></div>
+          <div id="watched" class="row">
+            <div class="row justify-content-center">
+              <div class="col-md-8 text-center mt-5">
+                <p class="mb-4">Sie sind nicht angemeldet. Um die Watchlist nutzen zu können müssen Sie sich anmelden oder ein Konto erstellen.</p>
+                <a href="login.html" class="btn btn-danger">Zur Anmeldung</a>
+              </div>
+            </div>
+          </div>
         </div>
     </div>
 </div>
