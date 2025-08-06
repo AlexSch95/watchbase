@@ -1,6 +1,6 @@
-function MovieCard({ movie, generateStars }) {
+function MovieCard({ movie, generateStars, setSelectedMovie }) {
   return (
-    <div className="col-md-4 mb-4">
+    <div className="col-md-4 mb-4" onClick={() => setSelectedMovie(movie)}>
       <div className="card h-100">
         <img src={movie.poster} className="card-img-top" alt={movie.title} />
         <div className="card-body">
