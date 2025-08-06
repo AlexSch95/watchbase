@@ -48,6 +48,17 @@ app.get("/api/movies", async (req, res) => {
   }
 });
 
+app.get("/api/genres", async (req, res)=>{
+  try {
+    const connection = await connectToDatabase();
+    const [rows] = await connection.execute('SELECT * FROM genres ORDER BY genre_name;')
+    await connection.end();
+    res.status(200).json(rows);
+  } catch (error) {
+    res.status(500).json({error: "Fehler beim Laden der Genres"});
+  }
+})
+
 app.post("/api/users/login", async (req, res) => {
   try {
     // Username und Passwort auslesen

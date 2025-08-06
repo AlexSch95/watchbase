@@ -16,14 +16,15 @@ async function getUserMovies() {
     const data = await res.json();
     userMoviesFromApi = data
     console.log("Filme geladen", data);
+    displayUserMovies(userMoviesFromApi)
   } catch (error) {
-    console.error(error)
-  } finally {
-    displayUserMovies(userMoviesFromApi);
+    console.error("Die Watchliste konnte nicht geladen werden, vermutlich ungültiger JWT übergeben Fehlermeldung:", error)
   }
 }
 
 function displayUserMovies(movieList) {
+  watchedContainer.innerHTML = "";
+  watchlistContainer.innerHTML = "";
   movieList.forEach((movie) => {
     //Erstellt ein div-Element für die Spalte und fügt Bootstrap-Klassen hinzu, damit jede Karte in einem 3-Spalten-Raster angezeigt wird.
     const col = document.createElement("div");
