@@ -222,3 +222,20 @@ html {
   letter-spacing: 0.1em;
 }
 
+.selected-items {
+    margin-top: 10px;
+}
+.selected-item {
+    display: inline-block;
+    background-color: #e9ecef;
+    padding: 5px 10px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border-radius: 20px;
+    font-size: 0.9em;
+}
+.selected-item .remove-item {
+    cursor: pointer;
+    margin-left: 5px;
+    color: #dc3545;
+}

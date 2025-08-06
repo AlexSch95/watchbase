@@ -1,11 +1,157 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Watchbase: Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!--* Eigenes CSS -->
+    <link rel="stylesheet" href="styles/style.css" />
 </head>
+
 <body>
-    <h1>Hinzufügen</h1>
+    <nav class="navbar navbar-expand-sm navbar-dark px-4">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html"><img src="images/watchbase.png" alt="" style="width: 200px;"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse text-end" id="navbarNav">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link d-inline-block" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link d-inline-block" href="movies.html">Filme</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link d-inline-block" href="watchlist.html">Watchlist</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link d-inline-block" href="login.html">Anmeldung</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <div class="p-5 rounded shadow mb-5">
+            <ul id="myTab2" class="nav nav-tabs nav-pills with-arrow lined flex-column flex-sm-row text-center"
+                role="tablist">
+                <li class="nav-item flex-sm-fill"><a id="newmovie-tab"
+                        class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 active" data-bs-toggle="tab"
+                        href="#newmovieTab" role="tab" aria-controls="home2" aria-selected="true">Film hinzufügen</a></li>
+                <li class="nav-item flex-sm-fill"><a id="watched-tab"
+                        class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0" data-bs-toggle="tab"
+                        href="#watchedTab" role="tab" aria-controls="profile2" aria-selected="false">coming soon</a>
+                </li>
+            </ul>
+            <div id="myTab2Content" class="tab-content">
+                <div id="newmovieTab" class="tab-pane fade px-4 py-5 show active row" role="tabpanel">
+                    <div id="newmovie" class="row">
+                        <div class="row justify-content-center">
+                            <div class="col-md-8 text-center mt-5">
+                                <form>
+                                    <!-- Filmtitel -->
+                                    <div class="mb-3">
+                                        <label for="filmTitle" class="form-label">Filmtitel</label>
+                                        <input type="text" class="form-control" id="filmTitle" required>
+                                    </div>
+
+                                    <!-- Regisseur -->
+                                    <div class="mb-3">
+                                        <label for="director" class="form-label">Regisseur</label>
+                                        <input type="text" class="form-control" id="director" required>
+                                    </div>
+
+                                    <!-- Rating -->
+                                    <div class="mb-3">
+                                        <label for="rating" class="form-label">Rating (1.0 - 10.0)</label>
+                                        <input type="text" class="form-control" id="rating" required>
+                                    </div>
+                                    <!-- Erscheinungsjahr -->
+                                    <div class="mb-3">
+                                        <label for="releaseYear" class="form-label">Erscheinungsjahr</label>
+                                        <input type="number" class="form-control" id="releaseYear" min="1888" max="2099"
+                                            required>
+                                    </div>
+
+                                    <!-- Genres -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Genres</label>
+                                        <div class="input-group">
+                                            <select class="form-select" id="genreSelect">
+                                                <option selected disabled value="">Genre auswählen...</option>
+                                            </select>
+                                            <button class="btn btn-outline-secondary" type="button"
+                                                id="addGenre">Hinzufügen</button>
+                                        </div>
+                                        <div class="selected-items" id="selectedGenres"></div>
+                                        <input type="hidden" id="genres" name="genres">
+                                    </div>
+
+                                    <!-- Schauspieler -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Schauspieler</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="actorInput"
+                                                placeholder="Schauspieler Name">
+                                            <button class="btn btn-outline-secondary" type="button"
+                                                id="addActor">Hinzufügen</button>
+                                        </div>
+                                        <div class="selected-items" id="selectedActors"></div>
+                                        <input type="hidden" id="actors" name="actors">
+                                    </div>
+
+                                    <!-- Kurzbeschreibung -->
+                                    <div class="mb-3">
+                                        <label for="description" class="form-label">Kurzbeschreibung</label>
+                                        <textarea class="form-control" id="description" rows="5" required></textarea>
+                                    </div>
+
+                                    <!-- Trailer URL -->
+                                    <div class="mb-3">
+                                        <label for="trailerUrl" class="form-label">Trailer URL (YouTube)</label>
+                                        <input type="url" class="form-control" id="trailerUrl"
+                                            placeholder="https://www.youtube.com/watch?v=..." required>
+                                    </div>
+
+                                    <!-- Poster URL -->
+                                    <div class="mb-3">
+                                        <label for="posterUrl" class="form-label">Poster URL</label>
+                                        <input type="url" class="form-control" id="posterUrl"
+                                            placeholder="https://example.com/poster.jpg" required>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary">Film speichern</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="watchedTab" class="tab-pane fade px-4 py-5 row" role="tabpanel">
+                    <div id="watched" class="row">
+                        <div class="row justify-content-center">
+                            <div class="col-md-8 text-center mt-5">
+                                <p class="mb-4">Sie sind nicht angemeldet. Um die Watchlist nutzen zu können müssen Sie
+                                    sich anmelden oder ein Konto erstellen.</p>
+                                <a href="login.html" class="btn btn-danger">Zur Anmeldung</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- Bootstrap + Script -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="scripts/admin.js"></script>
 </body>
+
 </html>
