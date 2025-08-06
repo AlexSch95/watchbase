@@ -210,6 +210,25 @@ app.post("/api/movies/user/add", authenticateToken, async (req, res) => {
   }
 })
 
+app.delete("/api/movies/user/delete", authenticateToken, async (req, res) => {
+  try {
+    const {movie_id} = req.body;
+    if (movie_id === undefined) {
+      return res.status(400).json({error: "Unvollständige Daten übergeben"})
+    }
+    const connection = await connectToDatabase();
+    const [isExisting] = await connection.execute("SELECT * FROM user_movies WHERE user_id = ? and movie_id = ?", [req.id, movie_id])
+    if (isExisting.length === 0) {
+      return res.status(404).json({error: "Watchlist Eintrag nicht gefunden"})
+    }
+    const [result] = await connection.execute("DELETE FROM user_movies WHERE movie_id = ? AND user_id = ?", [movie_id, req.id])
+    await connection.end();
+    res.status(200).json({message: "Watchlist Eintrag erfolgreich gelöscht"})
+  } catch (error) {
+    res.status(500).json({error: "Fehler beim hinzufügen zur Watchlist"});
+  }
+})
+
 
 app.listen(3000, () => {
   console.log("Server läuft auf http://localhost:3000");
