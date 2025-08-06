@@ -42,8 +42,10 @@
 
         <!-- Dieser Block zeigt ein Dropdown-Menü zur Filterung nach Genre oben rechts auf der Seite.  -->
         <div class="d-flex justify-content-end mb-4">
-          <div class="genre-filter-box p-2">
+          <div class="d-flex genre-filter-box p-2 gap-2">
             <!-- <label for="genreFilter" class="form-label text-white">Genre:</label> -->
+            <input id="titleSearch" type="text" class="form-control bg-dark text-white border-secondary"
+              placeholder="Suche nach Filmtitel..." style="width: 235px;">
             <select
               id="genreFilter"
               class="form-select bg-dark text-white border-secondary">
