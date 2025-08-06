@@ -10,17 +10,15 @@ function MovieContainer ({movies}) {
   }
   console.log(movies)
   return (
-    <div className="row">
-      <h1>Movies:</h1>
+    <div className="row" id="movieContainer">
       {movies.map(
-        movie => {
-          console.log('loading...', movie);
+        movie => (
           <MovieCard
             key={movie.id}
             movie={movie}
             generateStars={generateStars}
           />
-        }
+        )
       )}
     </div>
   );
