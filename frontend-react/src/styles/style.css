@@ -93,10 +93,9 @@ html {
   /* overflow: hidden; */
 }
 
-/* #movieModal {
-
-  overflow: hidden;
-} */
+.modal {
+  z-index: 2;
+}
 
 .hero {
     margin-top: 20vh;
