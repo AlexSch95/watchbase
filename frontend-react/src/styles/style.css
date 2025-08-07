@@ -88,6 +88,16 @@ html {
     z-index: -1;
 }
 
+.overlay.modal-overlay {
+  z-index: 1;
+  overflow: hidden;
+}
+
+#movieModal {
+
+  overflow: hidden;
+}
+
 .hero {
     margin-top: 20vh;
 }

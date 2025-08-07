@@ -17,7 +17,8 @@ function MovieContainer({ movies, setSelectedMovie}) {
           key={movie.id}
           movie={movie}
           generateStars={generateStars}
-          setSelectedMovie={setSelectedMovie}
+          // setSelectedMovie={setSelectedMovie}
+          onSelect={() => setSelectedMovie(movie)}
         />
       ))}
     </div>

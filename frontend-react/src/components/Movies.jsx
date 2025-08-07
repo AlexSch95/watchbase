@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Filter from "./Filter";
 import MovieContainer from "./MovieContainer";
+import MovieModal from "./MovieModal";
 
 function Movies() {
   const [movies, setMovies] = useState([]);
@@ -70,7 +71,7 @@ function Movies() {
   }, [selectedGenre, searchTitle, movies]);
 
   useEffect(() => {
-    selectedMovie && console.log(selectedMovie.title);
+    selectedMovie && console.log(selectedMovie.title)
   }, [selectedMovie])
 
   // setSelectedMovie({title: "abcd"})
@@ -86,6 +87,7 @@ function Movies() {
         movies={filteredMovies}
         setSelectedMovie={setSelectedMovie}
       />
+      {selectedMovie && <MovieModal movie={selectedMovie}/>}
     </div>
   );
 }

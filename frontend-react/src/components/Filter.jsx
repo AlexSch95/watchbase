@@ -17,9 +17,11 @@ function Filter ({genres, setSelectedGenre, setSearchTitle}) {
             className="form-select bg-dark text-white border-secondary"
             // onChange={applyFilters()}
           >
-            <option value="all">Alle Genres</option>
+            <option key="all" value="all">Alle Genres</option>
             {genres.map((genre) => (
-              <option value={genre.genre_name}>{genre.genre_name}</option>
+              <option key={genre.genre_id} value={genre.genre_name}>
+                {genre.genre_name}
+              </option>
             ))}
           </select>
         </div>
