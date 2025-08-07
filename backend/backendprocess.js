@@ -154,14 +154,14 @@ app.get("/api/movies/user", authenticateToken, async (req, res) => {
     const connection = await connectToDatabase();
     const [rows] = await connection.execute(
       `SELECT
-          m.movie_id,
+          m.movie_id AS id,
           m.title,
-          m.release_year,
+          m.release_year AS year,
           m.director,
-          m.short_description,
-          m.trailer_url,
-          m.poster,
           m.rating,
+          m.short_description AS shortDescription,
+          m.poster,
+          m.trailer_url AS trailer,
           um.watched_status,
           GROUP_CONCAT(DISTINCT g.genre_name SEPARATOR ', ') AS genres,
           GROUP_CONCAT(DISTINCT a.actor_name SEPARATOR ', ') AS actors
@@ -193,14 +193,14 @@ app.get("/api/movies/user/all", authenticateToken, async (req, res) => {
     const [rows] = await connection.execute(
       `SELECT am.*, um.user_id, um.watched_status FROM (
         SELECT
-          m.movie_id,
+          m.movie_id AS id,
           m.title,
-          m.release_year,
+          m.release_year AS year,
           m.director,
-          m.short_description,
-          m.trailer_url,
-          m.poster,
           m.rating,
+          m.short_description AS shortDescription,
+          m.poster,
+          m.trailer_url AS trailer,
           -- um.watched_status,
           GROUP_CONCAT(DISTINCT g.genre_name SEPARATOR ', ') AS genres,
           GROUP_CONCAT(DISTINCT a.actor_name SEPARATOR ', ') AS actors
@@ -216,7 +216,7 @@ app.get("/api/movies/user/all", authenticateToken, async (req, res) => {
       LEFT OUTER JOIN (
         SELECT * FROM user_movies um
         WHERE user_id = ?
-      ) um ON um.movie_id = am.movie_id;
+      ) um ON um.movie_id = am.id;
       `,
       [req.id]
     );

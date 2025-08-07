@@ -17,19 +17,21 @@ function Movies({loggedIn}) {
   useEffect(() => {
     async function getMovies() {
       try {
-        let apiUrl = '';
+        let response;
         if (loggedIn) {
-          apiUrl = "http://localhost:3000/api/movies/user/all";
+          const token = localStorage.getItem("jwttoken");
+          response = await fetch(
+            "http://localhost:3000/api/movies/user/all",
+            {headers: {authorization: `Bearer ${token}`}}
+          );
         } else {
-          apiUrl = "http://localhost:3000/api/movies";
+          response = await fetch("http://localhost:3000/api/movies");
         }
-        const response = await fetch(apiUrl);
         if (!response.ok) {
           throw new Error(`HTTP Error: ${response.status}`);
         }
         const moviesFromApi = await response.json();
         setMovies(moviesFromApi);
-        // setFilteredMovies(moviesFromApi);
         console.log("Filme geladen: ", moviesFromApi);
       } catch (error) {
         console.log("Fehler beim Laden", error);
@@ -85,15 +87,9 @@ function Movies({loggedIn}) {
     applyFilters();
   }, [selectedGenre, searchTitle, movies, watchedFilter]);
 
-  useEffect(() => {
-    selectedMovie && console.log(selectedMovie.title)
-  }, [selectedMovie])
-
   function hideModal () {
     setSelectedMovie(null);
   }
-
-  // setSelectedMovie({title: "abcd"})
 
   return (
     <div className="container py-5">
@@ -101,6 +97,8 @@ function Movies({loggedIn}) {
         genres={genres}
         setSelectedGenre={setSelectedGenre}
         setSearchTitle={setSearchTitle}
+        loggedIn={loggedIn}
+        setWatchedFilter={setWatchedFilter}
       />
       <MovieContainer
         movies={filteredMovies}
@@ -108,10 +106,7 @@ function Movies({loggedIn}) {
         loggedIn={loggedIn}
       />
       {selectedMovie && (
-        <MovieModal
-          movie={selectedMovie}
-          hideModal={hideModal}
-        />
+        <MovieModal movie={selectedMovie} hideModal={hideModal} />
       )}
     </div>
   );

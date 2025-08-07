@@ -13,6 +13,7 @@ function MovieContainer({ movies, setSelectedMovie, loggedIn}) {
   return (
     <div className="row" id="movieContainer">
       {movies.map((movie) => (
+        console.log(movie.id),
         <MovieCard
           key={movie.id}
           movie={movie}

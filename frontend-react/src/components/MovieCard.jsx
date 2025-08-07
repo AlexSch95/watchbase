@@ -3,9 +3,66 @@ function MovieCard({ movie, generateStars, onSelect, loggedIn }) {
   function handleCardClicked() {
     onSelect();
   }
-  function handleAddToWatchlist(event) {
+  function handleAdd(event) {
     event.stopPropagation();
-    // addToWatchlist();
+    addWatchlistEntry(movie.id, 0);
+  }
+  function handleWatch(event) {
+    event.stopPropagation();
+    addWatchlistEntry(movie.id, 1);
+  }
+  function handleDelete(event) {
+    event.stopPropagation();
+    deleteWatchlistEntry(movie.id);
+  }
+
+  async function addWatchlistEntry(id, status) {
+    try {
+      const token = localStorage.getItem("jwttoken");
+      const response = await fetch(
+        "http://localhost:3000/api/user/movies/add",
+        {
+          method: "POST",
+          headers: {
+            authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            movie_id: id,
+            watched_status: status,
+          }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP Error: ${response.status}`);
+      }
+    } catch (error) {
+      console.log("Fehler beim hinzufügen zur Watchlist", error);
+    }
+  }
+
+  async function deleteWatchlistEntry(id) {
+    try {
+      const token = localStorage.getItem("jwttoken");
+      const response = await fetch(
+        "http://localhost:3000/api/user/movies/delete",
+        {
+          method: "DELETE",
+          headers: {
+            authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            movie_id: id,
+          }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP Error: ${response.status}`);
+      }
+    } catch (error) {
+      console.log("Fehler beim Löschen von der Watchlist", error);
+    }
   }
 
   return (
@@ -25,21 +82,33 @@ function MovieCard({ movie, generateStars, onSelect, loggedIn }) {
             ""
           ) : (
             <div className="d-flex justify-content-end">
-              (<a
-                href="#"
-                className="btn btn-danger watch-button"
-                onClick={handleAddToWatchlist}>
-                👁️
-              </a>)
-              (<a
-                href="#"
-                className="btn btn-danger watch-button"
-                onClick={handleAddToWatchlist}>
-                👁️
-              </a>)
-              (<a href="#" className="btn btn-danger watch-button">
-                ⛉
-              </a>)
+              {movie.watched_status === 0 ? (
+                ""
+              ) : (
+                <button
+                  className="btn btn-warning watch-button"
+                  onClick={handleAdd}>
+                  👁️
+                </button>
+              )}{" "}
+              {movie.watched_status === 1 ? (
+                ""
+              ) : (
+                <button
+                  className="btn btn-success watch-button"
+                  onClick={handleWatch}>
+                  ✔️
+                </button>
+              )}{" "}
+              {movie.watched_status === null ? (
+                ""
+              ) : (
+                <button
+                  className="btn btn-danger watch-button"
+                  onClick={handleDelete}>
+                  ✖️
+                </button>
+              )}
             </div>
           )}
         </div>
