@@ -90,13 +90,13 @@ html {
 
 .overlay.modal-overlay {
   z-index: 1;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
-#movieModal {
+/* #movieModal {
 
   overflow: hidden;
-}
+} */
 
 .hero {
     margin-top: 20vh;

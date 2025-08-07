@@ -74,6 +74,10 @@ function Movies() {
     selectedMovie && console.log(selectedMovie.title)
   }, [selectedMovie])
 
+  function hideModal () {
+    setSelectedMovie(null);
+  }
+
   // setSelectedMovie({title: "abcd"})
 
   return (
@@ -87,7 +91,12 @@ function Movies() {
         movies={filteredMovies}
         setSelectedMovie={setSelectedMovie}
       />
-      {selectedMovie && <MovieModal movie={selectedMovie}/>}
+      {selectedMovie && (
+        <MovieModal
+          movie={selectedMovie}
+          hideModal={hideModal}
+        />
+      )}
     </div>
   );
 }

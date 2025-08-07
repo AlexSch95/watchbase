@@ -1,9 +1,6 @@
-function MovieModal({ movie }) {
+function MovieModal({ movie, hideModal }) {
   return (
-    <>
-      <div className="overlay modal-overlay">
-    </div>
-
+    <div className="overlay modal-overlay" onClick={hideModal}>
       <div
         className="modal fade show d-block"
         id="movieModal"
@@ -20,7 +17,8 @@ function MovieModal({ movie }) {
                 type="button"
                 className="btn-close btn-close-white"
                 data-bs-dismiss="modal"
-                aria-label="Schließen"></button>
+                aria-label="Schließen"
+                onClick={hideModal}></button>
             </div>
             <div className="modal-body">
               <p id="movieDescription">{movie.shortDescription}</p>
@@ -45,7 +43,7 @@ function MovieModal({ movie }) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
