@@ -1,6 +1,6 @@
 import logo from "./images/watchbase.png";
 
-function Navbar({showLogin}) {
+function Navbar({ showLogin, loggedIn, logOut }) {
   return (
     <nav className="navbar navbar-expand-sm navbar-dark px-4">
       <div className="container-fluid">
@@ -35,8 +35,8 @@ function Navbar({showLogin}) {
               <a
                 className="nav-link d-inline-block"
                 href="#"
-                onClick={showLogin}>
-                Anmeldung
+                onClick={loggedIn ? logOut : showLogin}>
+                {loggedIn ? "Abmelden" : "Anmeldung"}
               </a>
             </li>
           </ul>

@@ -47,7 +47,7 @@ function RegisterModal({ hideRegister, showLogin }) {
       if (!response.ok) {
         throw new Error(`HTTP Error: ${response.status}`);
       }
-      hideRegister();
+      switchModal();
     } catch (error) {
       console.error(error);
     }

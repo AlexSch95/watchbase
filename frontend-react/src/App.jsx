@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 import Movies from "./components/Movies";
 import LoginModal from "./components/LoginModal";
 import RegisterModal from "./components/RegisterModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
   const [loginOpen, setLoginOpen] = useState(false);
@@ -20,15 +20,32 @@ function App() {
   function hideRegister () {
     setRegisterOpen(false);
   }
+  function logOut () {
+    localStorage.removeItem("jwttoken");
+    setLoggedIn(false);
+  }
 
   const [loggedIn, setLoggedIn] = useState(false);
 
+  useEffect(() => {
+    if (localStorage.getItem("jwttoken")) {
+      setLoggedIn(true);
+    }
+  }, [])
+
   return (
     <>
-      <Navbar showLogin={showLogin} />
+      <Navbar
+        showLogin={showLogin}
+        loggedIn={loggedIn}
+        logOut={logOut} />
       <Movies />
       {loginOpen && (
-        <LoginModal hideLogin={hideLogin} setLoggedIn={setLoggedIn} showRegister={showRegister}/>
+        <LoginModal
+          hideLogin={hideLogin}
+          setLoggedIn={setLoggedIn}
+          showRegister={showRegister}
+        />
       )}
       {registerOpen && (
         <RegisterModal hideRegister={hideRegister} showLogin={showLogin} />
