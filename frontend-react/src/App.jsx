@@ -39,7 +39,9 @@ function App() {
         showLogin={showLogin}
         loggedIn={loggedIn}
         logOut={logOut} />
-      <Movies />
+      <Movies
+        loggedIn={loggedIn}
+      />
       {loginOpen && (
         <LoginModal
           hideLogin={hideLogin}

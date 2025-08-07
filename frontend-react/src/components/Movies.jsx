@@ -3,7 +3,7 @@ import Filter from "./Filter";
 import MovieContainer from "./MovieContainer";
 import MovieModal from "./MovieModal";
 
-function Movies() {
+function Movies({loggedIn}) {
   const [movies, setMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [genres, setGenres] = useState([]);
@@ -11,12 +11,19 @@ function Movies() {
   const [selectedGenre, setSelectedGenre] = useState("all");
   const [searchTitle, setSearchTitle] = useState("");
   const [selectedMovie, setSelectedMovie] = useState(null);
+  const [watchedFilter, setWatchedFilter] = useState(null);
 
   // Alle Filme ziehen
   useEffect(() => {
     async function getMovies() {
       try {
-        const response = await fetch("http://localhost:3000/api/movies");
+        let apiUrl = '';
+        if (loggedIn) {
+          apiUrl = "http://localhost:3000/api/movies/user/all";
+        } else {
+          apiUrl = "http://localhost:3000/api/movies";
+        }
+        const response = await fetch(apiUrl);
         if (!response.ok) {
           throw new Error(`HTTP Error: ${response.status}`);
         }
@@ -29,7 +36,7 @@ function Movies() {
       }
     }
     getMovies();
-  }, []);
+  }, [loggedIn]);
 
   // Alle Genres ziehen
   useEffect(() => {
@@ -65,10 +72,18 @@ function Movies() {
           movie.title.toLowerCase().includes(searchTitle.toLowerCase())
         );
       }
+      if (loggedIn && watchedFilter !== null) {
+        if (watchedFilter === 2) {
+          filtered = filtered.filter((movie) => movie.watched_status !== null)
+        } else {
+          filtered = filtered.filter((movie) => movie.watched_status !== watchedFilter);
+        }
+      }
+
       setFilteredMovies(filtered);
     }
     applyFilters();
-  }, [selectedGenre, searchTitle, movies]);
+  }, [selectedGenre, searchTitle, movies, watchedFilter]);
 
   useEffect(() => {
     selectedMovie && console.log(selectedMovie.title)
@@ -90,6 +105,7 @@ function Movies() {
       <MovieContainer
         movies={filteredMovies}
         setSelectedMovie={setSelectedMovie}
+        loggedIn={loggedIn}
       />
       {selectedMovie && (
         <MovieModal

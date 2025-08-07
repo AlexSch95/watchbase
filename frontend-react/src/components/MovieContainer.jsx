@@ -1,6 +1,6 @@
 import MovieCard from "./MovieCard";
 
-function MovieContainer({ movies, setSelectedMovie}) {
+function MovieContainer({ movies, setSelectedMovie, loggedIn}) {
   function generateStars(rating) {
     const fullStars = Math.floor(rating);
     const halfStar = rating % 1 >= 0.5;
@@ -17,6 +17,7 @@ function MovieContainer({ movies, setSelectedMovie}) {
           key={movie.id}
           movie={movie}
           generateStars={generateStars}
+          loggedIn={loggedIn}
           // setSelectedMovie={setSelectedMovie}
           onSelect={() => setSelectedMovie(movie)}
         />

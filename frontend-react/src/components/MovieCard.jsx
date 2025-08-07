@@ -1,4 +1,4 @@
-function MovieCard({ movie, generateStars, onSelect }) {
+function MovieCard({ movie, generateStars, onSelect, loggedIn }) {
   // addToWatchlist hinzufügen
   function handleCardClicked() {
     onSelect();
@@ -21,17 +21,27 @@ function MovieCard({ movie, generateStars, onSelect }) {
             <span className="movie-title"> - </span>
             <span className="year">{movie.year}</span>
           </div>
-          <div className="d-flex justify-content-end">
-            <a
-              href="#"
-              className="btn btn-danger watch-button"
-              onClick={handleAddToWatchlist}>
-              👁️
-            </a>
-            <a href="#" className="btn btn-danger watch-button">
-              ⛉
-            </a>
-          </div>
+          {!loggedIn ? (
+            ""
+          ) : (
+            <div className="d-flex justify-content-end">
+              (<a
+                href="#"
+                className="btn btn-danger watch-button"
+                onClick={handleAddToWatchlist}>
+                👁️
+              </a>)
+              (<a
+                href="#"
+                className="btn btn-danger watch-button"
+                onClick={handleAddToWatchlist}>
+                👁️
+              </a>)
+              (<a href="#" className="btn btn-danger watch-button">
+                ⛉
+              </a>)
+            </div>
+          )}
         </div>
       </div>
     </div>
