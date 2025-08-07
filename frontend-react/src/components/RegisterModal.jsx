@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 function RegisterModal({ hideRegister, showLogin }) {
   function dontHide(event) {
@@ -7,9 +7,24 @@ function RegisterModal({ hideRegister, showLogin }) {
   const [registerUserName, setRegisterUserName] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
   const [registerPasswordConfirm, setRegisterPasswordConfirm] = useState("");
+  // const [passwordConfirmInput, setPasswordConfirmInput] = useState("");
+  const confirmInput = useRef();
 
   const checkPasswordEqual = registerPassword === registerPasswordConfirm;
   console.log(checkPasswordEqual);
+
+  useEffect(() => {
+    function checkEqual() {
+    if (checkPasswordEqual) {
+      confirmInput.current.setCustomValidity("");
+    } else {
+      confirmInput.current.setCustomValidity(
+        "Passwörter stimmen nicht überein"
+      );
+    }
+  }
+  checkEqual();
+  }, [checkPasswordEqual])
 
   function switchModal() {
     showLogin();
@@ -18,7 +33,7 @@ function RegisterModal({ hideRegister, showLogin }) {
 
   async function register() {
     try {
-      if (registerPassword !== registerPasswordConfirm) {
+      if (!checkPasswordEqual) {
         return console.log("Password mismatch");
       }
       const response = await fetch("http://localhost:3000/api/users/register", {
@@ -38,15 +53,6 @@ function RegisterModal({ hideRegister, showLogin }) {
     }
   }
 
-  function checkEqual() {
-    const password = document.getElementById("registerPassword");
-    const passwordConfirm = document.getElementById("registerPasswordConfirm");
-    if (password.value === passwordConfirm.value) {
-      passwordConfirm.setCustomValidity("");
-    } else {
-      passwordConfirm.setCustomValidity("Passwörter stimmen nicht überein");
-    }
-  }
 
   return (
     <div className="overlay modal-overlay" onClick={hideRegister}>
@@ -92,6 +98,7 @@ function RegisterModal({ hideRegister, showLogin }) {
             required
             placeholder="Passwort wiederholen"
             onChange={(event) => setRegisterPasswordConfirm(event.target.value)}
+            ref={confirmInput}
           />
           <button className="btn btn-danger" type="submit">
             Registrieren
