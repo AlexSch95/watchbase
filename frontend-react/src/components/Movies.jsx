@@ -117,8 +117,6 @@ function Movies({loggedIn}) {
         genres={genres}
         setSelectedGenre={setSelectedGenre}
         setSearchTitle={setSearchTitle}
-        loggedIn={loggedIn}
-        setWatchedFilter={setWatchedFilter}
       />
       {loggedIn &&
         <WatchedFilterTabs

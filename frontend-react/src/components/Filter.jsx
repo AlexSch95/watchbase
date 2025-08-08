@@ -1,42 +1,8 @@
-function Filter({ genres, setSelectedGenre, setSearchTitle, loggedIn, setWatchedFilter }) {
+function Filter({ genres, setSelectedGenre, setSearchTitle }) {
   return (
     <div className="text-center mb-4">
       <div className="d-flex justify-content-end mb-4">
         <div className="d-flex genre-filter-box p-2 gap-2">
-          {!loggedIn ? (
-            ""
-          ) : (
-            <select
-              id="watchedFilter"
-              className="form-select bg-dark text-white border-secondary"
-              onChange={(event) => setWatchedFilter(event.target.value)}
-            >
-              <option
-                key="all_movies"
-                value="all_movies"
-              >
-                Alle Filme
-              </option>
-              <option
-                key="my_movies"
-                value="my_movies"
-              >
-                Meine Filme
-              </option>
-              <option
-                key="watchlist"
-                value="watchlist"
-              >
-                Watchlist
-              </option>
-              <option
-                key="watched"
-                value="watched"
-              >
-                Geschaut
-              </option>
-            </select>
-          )}
           <input
             id="titleSearch"
             type="text"
