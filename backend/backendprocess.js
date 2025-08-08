@@ -187,6 +187,48 @@ app.get("/api/movies/user", authenticateToken, async (req, res) => {
   }
 });
 
+app.post("/api/movies/user/add", authenticateToken, async (req, res) => {
+  try {
+    const {movie_id, watched_status} = req.body;
+    if (movie_id === undefined || watched_status === undefined) {
+      return res.status(400).json({error: "Unvollständige Daten übergeben"})
+    }
+    const connection = await connectToDatabase();
+    const [isExisting] = await connection.execute("SELECT * FROM user_movies WHERE user_id = ? and movie_id = ?", [req.id, movie_id])
+    if (isExisting.length > 0) {
+      if (isExisting[0].watched_status !== watched_status) {
+        const [switchStatus] = await connection.execute("UPDATE user_movies SET watched_status = ? WHERE user_id = ? AND movie_id = ?", [watched_status, req.id, movie_id])
+        return res.status(200).json({message: "Watched-Status des Films wurde angepasst"})
+      }
+      return res.status(400).json({error: "Film ist bereits auf der Watchlist mit dem selben Status", movie_id: movie_id})
+    }
+    const [result] = await connection.execute("INSERT INTO user_movies (user_id, movie_id, watched_status) VALUES (?, ?, ?)", [req.id, movie_id, watched_status]);
+    await connection.end();
+    res.status(201).json({message: "Film erfolgreich zur Watchlist hinzugefügt"})
+  } catch (error) {
+    res.status(500).json({error: "Fehler beim hinzufügen zur Watchlist"});
+  }
+})
+
+app.delete("/api/movies/user/delete", authenticateToken, async (req, res) => {
+  try {
+    const {movie_id} = req.body;
+    if (movie_id === undefined) {
+      return res.status(400).json({error: "Unvollständige Daten übergeben"})
+    }
+    const connection = await connectToDatabase();
+    const [isExisting] = await connection.execute("SELECT * FROM user_movies WHERE user_id = ? and movie_id = ?", [req.id, movie_id])
+    if (isExisting.length === 0) {
+      return res.status(404).json({error: "Watchlist Eintrag nicht gefunden"})
+    }
+    const [result] = await connection.execute("DELETE FROM user_movies WHERE movie_id = ? AND user_id = ?", [movie_id, req.id])
+    await connection.end();
+    res.status(200).json({message: "Watchlist Eintrag erfolgreich gelöscht"})
+  } catch (error) {
+    res.status(500).json({error: "Fehler beim hinzufügen zur Watchlist"});
+  }
+})
+
 
 app.listen(3000, () => {
   console.log("Server läuft auf http://localhost:3000");

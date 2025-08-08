@@ -24,6 +24,49 @@ async function getMovies() {
   }
 }
 
+async function addWatchlistEntry() {
+  try {
+    const token = localStorage.getItem("jwttoken");
+    const response = await fetch('http://localhost:3000/api/user/movies/add', {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${token}`,
+        'Content-Type': "application/json",
+      },
+      body: JSON.stringify({
+        movie_id: "platzhalter",
+        watched_status: "platzhalter"
+      })
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP Error: ${response.status}`);
+    }
+  } catch (error) {
+    console.log("Fehler beim hinzufügen zur Watchlist", error);
+  }
+}
+
+async function deleteWatchlistEntry() {
+  try {
+    const token = localStorage.getItem("jwttoken");
+    const response = await fetch('http://localhost:3000/api/user/movies/delete', {
+      method: "DELETE",
+      headers: {
+        authorization: `Bearer ${token}`,
+        'Content-Type': "application/json",
+      },
+      body: JSON.stringify({
+        movie_id: "platzhalter"
+      })
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP Error: ${response.status}`);
+    }
+  } catch (error) {
+    console.log("Fehler beim Löschen von der Watchlist", error);
+  }
+}
+
 async function getGenres() {
   try {
     const response = await fetch('http://localhost:3000/api/genres')
