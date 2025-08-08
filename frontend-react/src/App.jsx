@@ -29,11 +29,19 @@ function App() {
 
   useEffect(() => {
     async function checkloggedIn () {
-      if (localStorage.getItem("jwttoken")) {
-        const response = await fetch("http://localhost:3000/api/user");
-        if (response.ok) {
+      const token = localStorage.getItem("jwttoken");
+      if (token) {
+        try {
+          const response = await fetch(
+            "http://localhost:3000/api/user",
+            {headers: {authorization: `Bearer ${token}`}}
+          );
+          if (!response.ok) {
+            throw new Error("authorization failed");
+          }
           setLoggedIn(true);
-        } else {
+        } catch (err) {
+          console.error(`Error: ${err}`);
           localStorage.removeItem("jwttoken");
         }
       }

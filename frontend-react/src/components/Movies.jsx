@@ -13,10 +13,6 @@ function Movies({loggedIn}) {
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [watchedFilter, setWatchedFilter] = useState("all_movies");
 
-useEffect(() => {
-  console.log(`watchedFilter: ${watchedFilter}`)
-}, [watchedFilter]);
-
   // Alle Filme ziehen
   useEffect(() => {
     async function getMovies() {
@@ -85,11 +81,11 @@ useEffect(() => {
             break;
           case "watchlist":
             filtered = filtered.filter(
-              (movie) => movie.watched_status === 1
+              (movie) => movie.watched_status === 0
             );
             break;
           case "watched":
-            filtered = filtered.filter((movie) => movie.watched_status === 0);
+            filtered = filtered.filter((movie) => movie.watched_status === 1);
             break;
           default:
             console.error("watchedFilter fehlerhaft");
@@ -106,6 +102,14 @@ useEffect(() => {
     setSelectedMovie(null);
   }
 
+  function changeWatchedStatus(movie, watched_status) {
+    const new_movie = { ...movie, watched_status: watched_status };
+    const changedMovies = movies.map((movie) =>
+      movie.id === new_movie.id ? new_movie : movie
+    );
+    setMovies(changedMovies);
+  }
+  
   return (
     <div className="container py-5">
       <Filter
@@ -119,7 +123,7 @@ useEffect(() => {
         movies={filteredMovies}
         setSelectedMovie={setSelectedMovie}
         loggedIn={loggedIn}
-        setMovies={setMovies}
+        changeWatchedStatus={changeWatchedStatus}
       />
       {selectedMovie && (
         <MovieModal movie={selectedMovie} hideModal={hideModal} />

@@ -44,7 +44,9 @@ function MovieCard({ movie, generateStars, onSelect, loggedIn, changeMovieState 
 
   async function deleteWatchlistEntry(id) {
     try {
+      console.log(`delete ${id}`)
       const token = localStorage.getItem("jwttoken");
+      console.log("got token")
       const response = await fetch(
         "http://localhost:3000/api/movies/user/delete",
         {
@@ -58,6 +60,8 @@ function MovieCard({ movie, generateStars, onSelect, loggedIn, changeMovieState 
           }),
         }
       );
+      console.log(`status: ${response.status}`)
+      console.log(`nachricht: ${response.body}`)
       if (!response.ok) {
         throw new Error(`HTTP Error: ${response.status}`);
       }

@@ -1,21 +1,20 @@
 import MovieCard from "./MovieCard";
 
-function MovieContainer({ movies, setSelectedMovie, loggedIn, setMovies }) {
+function MovieContainer({
+  movies,
+  setSelectedMovie,
+  loggedIn,
+  changeWatchedStatus,
+}) {
   function generateStars(rating) {
     const fullStars = Math.floor(rating);
     const halfStar = rating % 1 >= 0.5;
     const emptyStars = 10 - fullStars - (halfStar ? 1 : 0);
-    return "★".repeat(fullStars) + (halfStar ? "⯪" : "") + "☆".repeat(emptyStars);
+    return (
+      "★".repeat(fullStars) + (halfStar ? "⯪" : "") + "☆".repeat(emptyStars)
+    );
   }
 
-  function changeWatchedStatus(movie_id, watched_status) {
-    movies.map((movie) => {
-      if (movie.id === movie_id) {
-        movie.watched_status = watched_status;
-      }})
-    setMovies(movies);
-  }
-  // console.log(movies)
   return (
     <div className="row" id="movieContainer">
       {movies.map((movie) => (
@@ -27,7 +26,7 @@ function MovieContainer({ movies, setSelectedMovie, loggedIn, setMovies }) {
           loggedIn={loggedIn}
           // setSelectedMovie={setSelectedMovie}
           onSelect={() => setSelectedMovie(movie)}
-          changeMovieState={(w) => changeWatchedStatus(movie.id, w)}
+          changeMovieState={(w) => changeWatchedStatus(movie, w)}
         />
       ))}
     </div>
