@@ -54,20 +54,24 @@ function App() {
       <Navbar
         showLogin={showLogin}
         loggedIn={loggedIn}
-        logOut={logOut} />
+        logOut={logOut}
+      />
       <Movies
         loggedIn={loggedIn}
       />
-      {loginOpen && (
+      {loginOpen &&
         <LoginModal
           hideLogin={hideLogin}
           setLoggedIn={setLoggedIn}
           showRegister={showRegister}
         />
-      )}
-      {registerOpen && (
-        <RegisterModal hideRegister={hideRegister} showLogin={showLogin} />
-      )}
+      }
+      {registerOpen &&
+        <RegisterModal
+          hideRegister={hideRegister}
+          showLogin={showLogin}
+        />
+      }
     </>
   );
 }

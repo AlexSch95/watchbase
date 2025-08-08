@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Filter from "./Filter";
 import MovieContainer from "./MovieContainer";
 import MovieModal from "./MovieModal";
+import WatchedFilterTabs from "./WatchedFilterTabs";
 
 function Movies({loggedIn}) {
   const [movies, setMovies] = useState([]);
@@ -109,7 +110,7 @@ function Movies({loggedIn}) {
     );
     setMovies(changedMovies);
   }
-  
+
   return (
     <div className="container py-5">
       <Filter
@@ -119,15 +120,24 @@ function Movies({loggedIn}) {
         loggedIn={loggedIn}
         setWatchedFilter={setWatchedFilter}
       />
+      {loggedIn &&
+        <WatchedFilterTabs
+          watchedFilter={watchedFilter}
+          setWatchedFilter={setWatchedFilter}
+        />
+      }
       <MovieContainer
         movies={filteredMovies}
         setSelectedMovie={setSelectedMovie}
         loggedIn={loggedIn}
         changeWatchedStatus={changeWatchedStatus}
       />
-      {selectedMovie && (
-        <MovieModal movie={selectedMovie} hideModal={hideModal} />
-      )}
+      {selectedMovie &&
+        <MovieModal
+          movie={selectedMovie}
+          hideModal={hideModal}
+        />
+      }
     </div>
   );
 }

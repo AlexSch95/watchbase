@@ -8,21 +8,31 @@ function Filter({ genres, setSelectedGenre, setSearchTitle, loggedIn, setWatched
           ) : (
             <select
               id="watchedFilter"
-              // value={selectedGenre}
-              onChange={(event) => setWatchedFilter(event.target.value)}
               className="form-select bg-dark text-white border-secondary"
-              // onChange={applyFilters()}
+              onChange={(event) => setWatchedFilter(event.target.value)}
             >
-              <option key="all_movies" value="all_movies">
+              <option
+                key="all_movies"
+                value="all_movies"
+              >
                 Alle Filme
               </option>
-              <option key="my_movies" value="my_movies">
+              <option
+                key="my_movies"
+                value="my_movies"
+              >
                 Meine Filme
               </option>
-              <option key="watchlist" value="watchlist">
+              <option
+                key="watchlist"
+                value="watchlist"
+              >
                 Watchlist
               </option>
-              <option key="watched" value="watched">
+              <option
+                key="watched"
+                value="watched"
+              >
                 Geschaut
               </option>
             </select>
@@ -36,16 +46,20 @@ function Filter({ genres, setSelectedGenre, setSearchTitle, loggedIn, setWatched
           />
           <select
             id="genreFilter"
-            // value={selectedGenre}
-            onChange={(event) => setSelectedGenre(event.target.value)}
             className="form-select bg-dark text-white border-secondary"
-            // onChange={applyFilters()}
+            onChange={(event) => setSelectedGenre(event.target.value)}
           >
-            <option key="all" value="all">
+            <option
+              key="all"
+              value="all"
+            >
               Alle Genres
             </option>
             {genres.map((genre) => (
-              <option key={genre.genre_id} value={genre.genre_name}>
+              <option
+                key={genre.genre_id}
+                value={genre.genre_name}
+              >
                 {genre.genre_name}
               </option>
             ))}
