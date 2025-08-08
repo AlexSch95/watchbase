@@ -1,9 +1,11 @@
 // import { useState, useEffect } from 'react'
 import Navbar from "./components/Navbar";
-import Movies from "./components/Movies";
+import Movies from "./Movies";
 import LoginModal from "./components/LoginModal";
 import RegisterModal from "./components/RegisterModal";
 import { useEffect, useState } from "react";
+import Home from "./Home";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   const [loginOpen, setLoginOpen] = useState(false);
@@ -49,16 +51,31 @@ function App() {
     checkloggedIn();
   }, [])
 
+  const [watchList, setWatchList] = useState(false);
+
+
   return (
     <>
       <Navbar
         showLogin={showLogin}
         loggedIn={loggedIn}
         logOut={logOut}
+        setWatchList={setWatchList}
       />
-      <Movies
+      <Routes>
+        <Route path="/home" element={<Home />} />
+        <Route path="/about" element={
+          <Movies
+            loggedIn={loggedIn}
+            watchList={watchList}
+          />
+        } />
+        {/* <Route path="/contact" element={<Contact />} /> */}
+      </Routes>
+      {/* <Movies
         loggedIn={loggedIn}
-      />
+        watchList={watchList}
+      /> */}
       {loginOpen &&
         <LoginModal
           hideLogin={hideLogin}

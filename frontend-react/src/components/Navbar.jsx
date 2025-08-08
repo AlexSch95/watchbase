@@ -1,6 +1,8 @@
-import logo from "./images/watchbase.png";
+import logo from "./images/watchbasev2.png";
+import { useNavigate } from 'react-router-dom';
 
-function Navbar({ showLogin, loggedIn, logOut }) {
+function Navbar({ showLogin, loggedIn, logOut, setWatchList }) {
+  const navigate = useNavigate();
   return (
     <nav className="navbar navbar-expand-sm navbar-dark px-4">
       <div className="container-fluid">
@@ -17,20 +19,30 @@ function Navbar({ showLogin, loggedIn, logOut }) {
         <div className="collapse navbar-collapse text-end" id="navbarNav">
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <a className="nav-link d-inline-block" href="index.html">
+              <a className="nav-link d-inline-block" onClick={() => navigate('/home')}>
                 Home
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link d-inline-block" href="movies.html">
+              <a
+                className="nav-link d-inline-block"
+                href="#"
+                onClick={() => setWatchList(false)}
+              >
                 Filme
               </a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link d-inline-block" href="watchlist.html">
-                Watchlist
-              </a>
-            </li>
+            {loggedIn &&
+              <li className="nav-item">
+                <a
+                  className="nav-link d-inline-block"
+                  href="#"
+                  onClick={() => setWatchList(true)}
+                >
+                  Watchlist
+                </a>
+              </li>
+            }
             <li className="nav-item">
               <a
                 className="nav-link d-inline-block"

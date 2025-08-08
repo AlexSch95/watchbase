@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import Filter from "./Filter";
-import MovieContainer from "./MovieContainer";
-import MovieModal from "./MovieModal";
-import WatchedFilterTabs from "./WatchedFilterTabs";
+import Filter from "./components/Filter";
+import MovieContainer from "./components/MovieContainer";
+import MovieModal from "./components/MovieModal";
+import WatchedFilterTabs from "./components/WatchedFilterTabs";
 
-function Movies({loggedIn}) {
+function Movies({loggedIn, watchList}) {
   const [movies, setMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [genres, setGenres] = useState([]);
@@ -12,7 +12,11 @@ function Movies({loggedIn}) {
   const [selectedGenre, setSelectedGenre] = useState("all");
   const [searchTitle, setSearchTitle] = useState("");
   const [selectedMovie, setSelectedMovie] = useState(null);
-  const [watchedFilter, setWatchedFilter] = useState("all_movies");
+  const [watchedFilter, setWatchedFilter] = useState(watchList ? "watchlist" : "all_movies");
+
+  useEffect(() => {
+    setWatchedFilter(watchList ? "watchlist" : "all_movies")
+  }, [watchList])
 
   // Alle Filme ziehen
   useEffect(() => {
