@@ -24,6 +24,11 @@ function Navbar({ showLogin, loggedIn, logOut }) {
               </a>
             </li>
             <li className="nav-item">
+              <a className="nav-link d-inline-block" onClick={() => navigate('/impressum')}>
+                Impressum
+              </a>
+            </li>
+            <li className="nav-item">
               <a
                 className="nav-link d-inline-block"
                 onClick={() => navigate('/movies')}

@@ -1,11 +1,11 @@
-// import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
+import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Movies from "./Movies";
 import LoginModal from "./components/LoginModal";
 import RegisterModal from "./components/RegisterModal";
-import { useEffect, useState } from "react";
 import Home from "./Home";
-import { Routes, Route } from "react-router-dom";
+import Impressum from './Impressum';
 
 function App() {
   const [loginOpen, setLoginOpen] = useState(false);
@@ -64,28 +64,20 @@ function App() {
       />
       <Routes>
         <Route path="/home" element={<Home />} />
+        <Route path="/impressum" element={<Impressum />} />
         <Route path="/movies" element={
-
           <Movies
             loggedIn={loggedIn}
             watchList={false}
           />
-
         } />
         <Route path="/watchlist" element={
-
           <Movies
             loggedIn={loggedIn}
             watchList={true}
           />
-
         } />
-        {/* <Route path="/contact" element={<Contact />} /> */}
       </Routes>
-      {/* <Movies
-        loggedIn={loggedIn}
-        watchList={watchList}
-      /> */}
       {loginOpen &&
         <LoginModal
           hideLogin={hideLogin}
