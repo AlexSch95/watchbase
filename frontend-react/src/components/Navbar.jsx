@@ -1,4 +1,4 @@
-import logo from "./images/watchbase.png";
+import logo from "./images/watchbasev2.png";
 
 function Navbar({ showLogin, loggedIn, logOut, setWatchList }) {
   return (
