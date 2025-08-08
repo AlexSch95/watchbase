@@ -1,4 +1,4 @@
-function MovieCard({ movie, generateStars, onSelect, loggedIn }) {
+function MovieCard({ movie, generateStars, onSelect, loggedIn, changeMovieState }) {
   // addToWatchlist hinzufügen
   function handleCardClicked() {
     onSelect();
@@ -20,7 +20,7 @@ function MovieCard({ movie, generateStars, onSelect, loggedIn }) {
     try {
       const token = localStorage.getItem("jwttoken");
       const response = await fetch(
-        "http://localhost:3000/api/user/movies/add",
+        "http://localhost:3000/api/movies/user/add",
         {
           method: "POST",
           headers: {
@@ -36,6 +36,7 @@ function MovieCard({ movie, generateStars, onSelect, loggedIn }) {
       if (!response.ok) {
         throw new Error(`HTTP Error: ${response.status}`);
       }
+      changeMovieState(status)
     } catch (error) {
       console.log("Fehler beim hinzufügen zur Watchlist", error);
     }
@@ -45,7 +46,7 @@ function MovieCard({ movie, generateStars, onSelect, loggedIn }) {
     try {
       const token = localStorage.getItem("jwttoken");
       const response = await fetch(
-        "http://localhost:3000/api/user/movies/delete",
+        "http://localhost:3000/api/movies/user/delete",
         {
           method: "DELETE",
           headers: {
@@ -60,6 +61,7 @@ function MovieCard({ movie, generateStars, onSelect, loggedIn }) {
       if (!response.ok) {
         throw new Error(`HTTP Error: ${response.status}`);
       }
+      changeMovieState(null)
     } catch (error) {
       console.log("Fehler beim Löschen von der Watchlist", error);
     }

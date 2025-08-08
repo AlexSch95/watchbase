@@ -11,7 +11,11 @@ function Movies({loggedIn}) {
   const [selectedGenre, setSelectedGenre] = useState("all");
   const [searchTitle, setSearchTitle] = useState("");
   const [selectedMovie, setSelectedMovie] = useState(null);
-  const [watchedFilter, setWatchedFilter] = useState(null);
+  const [watchedFilter, setWatchedFilter] = useState("all_movies");
+
+useEffect(() => {
+  console.log(`watchedFilter: ${watchedFilter}`)
+}, [watchedFilter]);
 
   // Alle Filme ziehen
   useEffect(() => {
@@ -74,18 +78,29 @@ function Movies({loggedIn}) {
           movie.title.toLowerCase().includes(searchTitle.toLowerCase())
         );
       }
-      if (loggedIn && watchedFilter !== null) {
-        if (watchedFilter === 2) {
-          filtered = filtered.filter((movie) => movie.watched_status !== null)
-        } else {
-          filtered = filtered.filter((movie) => movie.watched_status !== watchedFilter);
+      if (loggedIn && watchedFilter !== "all_movies") {
+        switch (watchedFilter) {
+          case "my_movies":
+            filtered = filtered.filter((movie) => movie.watched_status !== null);
+            break;
+          case "watchlist":
+            filtered = filtered.filter(
+              (movie) => movie.watched_status === 1
+            );
+            break;
+          case "watched":
+            filtered = filtered.filter((movie) => movie.watched_status === 0);
+            break;
+          default:
+            console.error("watchedFilter fehlerhaft");
+            break;
         }
       }
 
       setFilteredMovies(filtered);
     }
     applyFilters();
-  }, [selectedGenre, searchTitle, movies, watchedFilter]);
+  }, [selectedGenre, searchTitle, movies, watchedFilter, loggedIn]);
 
   function hideModal () {
     setSelectedMovie(null);
@@ -104,6 +119,7 @@ function Movies({loggedIn}) {
         movies={filteredMovies}
         setSelectedMovie={setSelectedMovie}
         loggedIn={loggedIn}
+        setMovies={setMovies}
       />
       {selectedMovie && (
         <MovieModal movie={selectedMovie} hideModal={hideModal} />

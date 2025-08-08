@@ -7,6 +7,12 @@
 -- -----------------------------------------------------
 
 INSERT INTO movies (title, release_year, director, short_description, trailer_url, poster, rating) VALUES
+('Django Unchained', 2012, 'Quentin Tarantino', 'In 1858, a bounty-hunter named King Schultz seeks out a slave named Django and buys him because he needs him to find some men he is looking for. ...', 'https://www.youtube.com/embed/0RjoVdtE2nk', 'http://www.newdvdreleasedates.com/images/posters/large/django-unchained-2012-05.jpg', 8.5),
+('Schindler''s List', 1993, 'Steven Spielberg', 'Oskar Schindler, a German industrialist and member of the Nazi party, tries to save his Jewish employees after witnessing the persecution of Jews...', 'https://www.youtube.com/embed/DxcSg6bL2Vg', 'https://image.tmdb.org/t/p/original/m0pV0fmMERzCvPVQbLLrPPLl5q1.jpg', 9.0),
+('Fight Club', 1999, 'David Fincher', 'An insomniac office worker and a devil-may-care soapmaker form an underground fight club that evolves into something much more...', 'https://www.youtube.com/embed/QW9wNFpLYiY', 'https://image.tmdb.org/t/p/original/8dR7Jd7DOEhU8cZ734Va17NRoZ2.jpg', 8.8),
+('Scarface', 1983, 'Brian De Palma', 'In 1980 Miami, a determined Cuban immigrant takes over a drug cartel and succumbs to greed.', 'https://www.youtube.com/embed/lU3EHVMkizc', 'https://www.wallpapersun.com/wp-content/uploads/2023/05/Scarface-Wallpapersun-uighf.jpg', 8.3),
+('Saving Private Ryan', 1998, 'Steven Spielberg', 'Following the Normandy Landings, a group of U.S. soldiers go behind enemy lines to retrieve a paratrooper...', 'https://www.youtube.com/embed/ved8259bfBI', 'https://posterspy.com/wp-content/uploads/2019/10/Saving_private_ryan_poster_NEW.jpg', 8.6),
+('Back to the Future', 1985, 'Robert Zemeckis', '''Back to the Future'' is a classic 1985 science fiction film where teenager Marty McFly is accidentally sent back in time from 1985 to 1955 in a time-traveling DeLorean...', 'https://www.youtube.com/watch?v=qvsgGtivCgs', 'https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p11991_p_v8_ap.jpg', 8.5);
 ('The Matrix', 1999, 'Lana Wachowski, Lilly Wachowski', 'A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.', 'https://www.youtube.com/embed/vKQi3bBA1y8', 'https://image.tmdb.org/t/p/original/f89Jxw_tW3exveaFAnCvIOt9yv8.jpg', 8.7),
 ('The Dark Knight', 2008, 'Christopher Nolan', 'When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.', 'https://www.youtube.com/embed/EXeTwQWrcwY', 'https://image.tmdb.org/t/p/original/qJ2tW6WMUDux911r6m7haRef0WH.jpg', 9.0),
 ('Inception', 2010, 'Christopher Nolan', 'A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.', 'https://www.youtube.com/embed/YoHD9XEInc0', 'https://image.tmdb.org/t/p/original/9gk7adHYeDvHkCKDyf1GHdTLtiL.jpg', 8.8),
@@ -173,6 +179,18 @@ INSERT INTO actors (actor_name) VALUES
 -- -----------------------------------------------------
 
 INSERT INTO movies_with_genres (movie_id, genre_id) VALUES
+-- Django Unchained (id: 1)
+(1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), -- Dark Comedy, Epic, Period Drama, Western Epic, Comedy, Drama, Western
+-- Schindler's List (id: 2)
+(2, 8), (2, 6), (2, 9), (2, 10), -- Biography, Drama, History, War
+-- Fight Club (id: 3)
+(3, 6), (3, 11), -- Drama, Psychological Thriller
+-- Scarface (id: 4)
+(4, 12), (4, 6), (4, 13), -- Crime, Drama, Thriller
+-- Saving Private Ryan (id: 5)
+(5, 6), (5, 10), -- Drama, War
+-- Back to the Future (id: 6)
+(6, 14), (6, 15), (6, 16), (6, 17), (6, 18), (6, 5), (6, 19); -- High-Concept Comedy, Teen Adventure, Time Travel, Urban Adventure, Adventure, Comedy, Sci-Fi
 -- The Matrix (id: 7)
 (7, 19), (7, 20), (7, 24), -- Sci-Fi, Action, Cyberpunk
 -- The Dark Knight (id: 8)

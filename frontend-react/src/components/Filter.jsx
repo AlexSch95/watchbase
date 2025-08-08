@@ -13,16 +13,16 @@ function Filter({ genres, setSelectedGenre, setSearchTitle, loggedIn, setWatched
               className="form-select bg-dark text-white border-secondary"
               // onChange={applyFilters()}
             >
-              <option key="all_movies" value={null}>
+              <option key="all_movies" value="all_movies">
                 Alle Filme
               </option>
-              <option key="my_movies" value={2}>
+              <option key="my_movies" value="my_movies">
                 Meine Filme
               </option>
-              <option key="watchlist" value={0}>
+              <option key="watchlist" value="watchlist">
                 Watchlist
               </option>
-              <option key="watched" value={1}>
+              <option key="watched" value="watched">
                 Geschaut
               </option>
             </select>

@@ -149,6 +149,10 @@ function authenticateToken(req, res, next) {
   }
 }
 
+app.get("/api/user", authenticateToken, async (req, res) => {
+  res.send(200).json({message: `User ${req.user} ist eingeloggt.`})
+})
+
 app.get("/api/movies/user", authenticateToken, async (req, res) => {
   try {
     const connection = await connectToDatabase();

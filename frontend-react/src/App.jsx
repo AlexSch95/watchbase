@@ -28,9 +28,17 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem("jwttoken")) {
-      setLoggedIn(true);
+    async function checkloggedIn () {
+      if (localStorage.getItem("jwttoken")) {
+        const response = await fetch("http://localhost:3000/api/user");
+        if (response.ok) {
+          setLoggedIn(true);
+        } else {
+          localStorage.removeItem("jwttoken");
+        }
+      }
     }
+    checkloggedIn();
   }, [])
 
   return (
