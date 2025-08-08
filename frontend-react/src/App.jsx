@@ -51,7 +51,7 @@ function App() {
     checkloggedIn();
   }, [])
 
-  const [watchList, setWatchList] = useState(false);
+  // const [watchList, setWatchList] = useState(false);
 
 
   return (
@@ -60,15 +60,25 @@ function App() {
         showLogin={showLogin}
         loggedIn={loggedIn}
         logOut={logOut}
-        setWatchList={setWatchList}
+        // setWatchList={setWatchList}
       />
       <Routes>
         <Route path="/home" element={<Home />} />
-        <Route path="/about" element={
+        <Route path="/movies" element={
+
           <Movies
             loggedIn={loggedIn}
-            watchList={watchList}
+            watchList={false}
           />
+
+        } />
+        <Route path="/watchlist" element={
+
+          <Movies
+            loggedIn={loggedIn}
+            watchList={true}
+          />
+
         } />
         {/* <Route path="/contact" element={<Contact />} /> */}
       </Routes>

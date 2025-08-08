@@ -6,9 +6,8 @@ function Home() {
   const navigate = useNavigate();
   return (
     <>
-    <img className="overlay" src={background}>
-    </img>
-      {/* <div className="overlay background"></div> */}
+    <img className="background" src={background}/>
+    <div className="overlay"/>
 
       <div className="container text-center hero">
         <img className="h-80" src={logo} alt="Logo"/>

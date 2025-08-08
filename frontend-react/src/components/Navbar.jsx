@@ -1,12 +1,12 @@
 import logo from "./images/watchbasev2.png";
 import { useNavigate } from 'react-router-dom';
 
-function Navbar({ showLogin, loggedIn, logOut, setWatchList }) {
+function Navbar({ showLogin, loggedIn, logOut }) {
   const navigate = useNavigate();
   return (
     <nav className="navbar navbar-expand-sm navbar-dark px-4">
       <div className="container-fluid">
-        <a className="navbar-brand" href="index.html">
+        <a className="navbar-brand" onClick={() => navigate('/home')}>
           <img className="img-navbar" src={logo} alt="" />
         </a>
         <button
@@ -26,8 +26,7 @@ function Navbar({ showLogin, loggedIn, logOut, setWatchList }) {
             <li className="nav-item">
               <a
                 className="nav-link d-inline-block"
-                href="#"
-                onClick={() => setWatchList(false)}
+                onClick={() => navigate('/movies')}
               >
                 Filme
               </a>
@@ -36,8 +35,7 @@ function Navbar({ showLogin, loggedIn, logOut, setWatchList }) {
               <li className="nav-item">
                 <a
                   className="nav-link d-inline-block"
-                  href="#"
-                  onClick={() => setWatchList(true)}
+                  onClick={() => navigate('/watchlist')}
                 >
                   Watchlist
                 </a>
@@ -46,7 +44,6 @@ function Navbar({ showLogin, loggedIn, logOut, setWatchList }) {
             <li className="nav-item">
               <a
                 className="nav-link d-inline-block"
-                href="#"
                 onClick={loggedIn ? logOut : showLogin}>
                 {loggedIn ? "Abmelden" : "Anmeldung"}
               </a>
