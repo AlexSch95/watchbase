@@ -28,6 +28,7 @@ async function addWatchlistEntry() {
   try {
     const token = localStorage.getItem("jwttoken");
     const response = await fetch('http://localhost:3000/api/user/movies/add', {
+      method: "POST",
       headers: {
         authorization: `Bearer ${token}`,
         'Content-Type': "application/json",
@@ -49,6 +50,7 @@ async function deleteWatchlistEntry() {
   try {
     const token = localStorage.getItem("jwttoken");
     const response = await fetch('http://localhost:3000/api/user/movies/delete', {
+      method: "DELETE",
       headers: {
         authorization: `Bearer ${token}`,
         'Content-Type': "application/json",
