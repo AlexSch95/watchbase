@@ -1,4 +1,3 @@
-// import { useState, useEffect } from 'react'
 import Navbar from "./components/Navbar";
 import Movies from "./components/Movies";
 import LoginModal from "./components/LoginModal";
@@ -49,15 +48,19 @@ function App() {
     checkloggedIn();
   }, [])
 
+  const [watchList, setWatchList] = useState(false);
+
   return (
     <>
       <Navbar
         showLogin={showLogin}
         loggedIn={loggedIn}
         logOut={logOut}
+        setWatchList={setWatchList}
       />
       <Movies
         loggedIn={loggedIn}
+        watchList={watchList}
       />
       {loginOpen &&
         <LoginModal
