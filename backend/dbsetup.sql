@@ -53,25 +53,9 @@ INSERT INTO movies (title, release_year, director, short_description, trailer_ur
 
 -- Genres zur Genre tabelle hinzufügen
 INSERT INTO genres (genre_name) VALUES
-('Dark Comedy'),
-('Epic'),
-('Period Drama'),
-('Western Epic'),
-('Comedy'),
-('Drama'),
-('Western'),
-('Biography'),
-('History'),
-('War'),
-('Psychological Thriller'),
-('Crime'),
-('Thriller'),
-('High-Concept Comedy'),
-('Teen Adventure'),
-('Time Travel'),
-('Urban Adventure'),
-('Adventure'),
-('Sci-Fi');
+('Dark Comedy'), ('Epic'), ('Period Drama'), ('Western Epic'), ('Comedy'), ('Drama'), ('Western'), ('Biography'), ('History'),
+('War'), ('Psychological Thriller'), ('Crime'), ('Thriller'), ('High-Concept Comedy'), ('Teen Adventure'), ('Time Travel'),
+('Urban Adventure'), ('Adventure'), ('Sci-Fi')
 
 -- genres zu filmen zuordnen
 INSERT INTO movies_with_genres (movie_id, genre_id) VALUES
@@ -113,27 +97,10 @@ INSERT INTO movies_with_genres (movie_id, genre_id) VALUES
 (6, 19); -- Sci-Fi
 
 INSERT INTO actors (actor_name) VALUES
-('Al Pacino'),
-('Ben Kingsley'),
-('Brad Pitt'),
-('Christoph Waltz'),
-('Christopher Lloyd'),
-('Claudia Wells'),
-('Crispin Glover'),
-('Edward Norton'),
-('Helena Bonham Carter'),
-('Jamie Foxx'),
-('Lea Thompson'),
-('Leonardo DiCaprio'),
-('Liam Neeson'),
-('Matt Damon'),
-('Michael J. Fox'),
-('Michelle Pfeiffer'),
-('Ralph Fiennes'),
-('Steven Bauer'),
-('Thomas F. Wilson'),
-('Tom Hanks'),
-('Tom Sizemore');
+('Al Pacino'), ('Ben Kingsley'), ('Brad Pitt'), ('Christoph Waltz'), ('Christopher Lloyd'),
+('Claudia Wells'), ('Crispin Glover'), ('Edward Norton'), ('Helena Bonham Carter'), ('Jamie Foxx'),
+('Lea Thompson'), ('Leonardo DiCaprio'), ('Liam Neeson'), ('Matt Damon'), ('Michael J. Fox'), ('Michelle Pfeiffer'),
+('Ralph Fiennes'), ('Steven Bauer'), ('Thomas F. Wilson'), ('Tom Hanks'), ('Tom Sizemore'),
 
 
 INSERT INTO movies_with_actors (movie_id, actor_id) VALUES

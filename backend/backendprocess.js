@@ -187,6 +187,17 @@ app.get("/api/movies/user", authenticateToken, async (req, res) => {
   }
 });
 
+app.get("/api/actors", async (req, res)=>{
+  try {
+    const connection = await connectToDatabase();
+    const [rows] = await connection.execute('SELECT * FROM actors ORDER BY actor_name;')
+    await connection.end();
+    res.status(200).json(rows);
+  } catch (error) {
+    res.status(500).json({error: "Fehler beim Laden der Schauspieler"});
+  }
+})
+
 
 app.listen(3000, () => {
   console.log("Server läuft auf http://localhost:3000");
