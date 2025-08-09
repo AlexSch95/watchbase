@@ -198,6 +198,111 @@ app.get("/api/actors", async (req, res)=>{
   }
 })
 
+app.post("/api/admin/addmovie", async (req, res) => {
+  try {
+    //destructuring des Request Body
+    const { title, release_year, director,
+        short_description, trailer_url,
+        poster, rating, genres, actors }
+        = req.body;
+
+    //Datenbank Verbindung aufbauen
+    const connection = await connectToDatabase();
+
+    //Prüfen ob schon ein Film mit dem Titel vorhanden ist, falls ja Abbruch
+    const [checkMovieTitle] = await connection.execute('SELECT * FROM movies WHERE title = ?', [title])
+    if (checkMovieTitle.length > 0) {
+      return res.send(400).json({error: "Film mit diesem Namen existiert bereits"});
+    }
+    //Query fürs einfügen des Films wird vorbereitet
+    const movieQuery = `INSERT INTO movies 
+              (title, release_year, director, short_description, trailer_url, poster, rating)
+              VALUES
+              (?, ?, ?, ?, ?, ?, ?)`
+    //Array mit den Werten die eingefügt werden wird vorbereitet
+    const movieData = [title, release_year, director, short_description, trailer_url, poster, rating];
+    //Query ausführen
+    const [addedMovie] = await connection.execute(movieQuery, movieData);
+    //Die ID mit der der neue Film hinzugefügt wurde zwischenspeichern
+    const addedMovieId = addedMovie.insertId;
+
+    //Generiere Dynamische Querys für Genres und Actors (da beliebig viele Genres und Actors pro Film eingetragen werden können)
+    const selectedGenresQuery = generateGenresSearchQuery(genres);
+    const selectedActorsQuery = generateActorSearchQuery(actors);
+
+    //Führe die Querys aus um die IDs zu den jeweiligen Genres zu erhalten um sie für die Kreuztabellen weiterzuverwenden
+    const [selectedGenres] = await connection.execute(selectedGenresQuery, genres);
+    const [selectedActors] = await connection.execute(selectedActorsQuery, actors)
+
+    //Generiere Dynamische Querys um Genres und Actors in die Kreuztabellen einzufügen
+    const [genreRelationQuery, genreRelationData] = generateGenreRelationQuery(selectedGenres, addedMovieId);
+    const [actorRelationQuery, actorRelationData] = generateActorRelationQuery(selectedActors, addedMovieId);
+    
+    //Führe die Querys aus um die Genre-Film-Beziehung einzutragen
+    const [addedGenreRelation] = await connection.execute(genreRelationQuery, genreRelationData);
+    const [addedActorRelation] = await connection.execute(actorRelationQuery, actorRelationData)
+    res.status(200).json({message: "ok"})
+
+
+  } catch (error) {
+    console.error(error);
+  }
+})
+
+function generateActorRelationQuery(actors, movieId) {
+  let actorRelationQuery = "INSERT INTO movies_with_actors (movie_id, actor_id) VALUES "
+  let actorRelationData = [];
+  //für jeden übermittelten Actor wird (?, ?) an die Query angehängt und im Array die movieId und die actor_id abgespeichert
+  actors.forEach(actor => {
+    actorRelationQuery += `(?, ?),`
+    actorRelationData.push(movieId, actor.actor_id)
+  })
+  //slice schneidet ganz hinten das letzte Komma ab, da sonst die SQL Syntax nichtmehr sauber ist
+  actorRelationQuery = actorRelationQuery.slice(0, -1);
+  console.log("Actor Relation Query:", actorRelationQuery);
+  console.log("Actor Relation Data:", actorRelationData);
+  //ReturnValues als Array, diese werden in der Route destructured
+  return [actorRelationQuery, actorRelationData]
+}
+
+function generateActorSearchQuery(actors) {
+  //legt den Anfang der Query fest, die Query gibt alle Actors mit ihren IDs zurück, die denen entsprechen die ans Backend geschickt wurden
+  let selectedActorsQuery = 'SELECT actor_id, actor_name FROM actors WHERE actor_name IN('
+  //für jeden Actor im Array (das aus dem Request Body kommt) wird ein ?, an die Query konkateniert
+  actors.forEach(actor => {
+    selectedActorsQuery += "?,"
+  })
+  //letztes Komma wird weggesliced
+  selectedActorsQuery = selectedActorsQuery.slice(0, -1);
+  //Query wird mit der Klammer geschlossen für korrekte Syntax
+  selectedActorsQuery += ");"
+  console.log("Actor Search Query:", selectedActorsQuery);
+  return selectedActorsQuery;
+}
+
+function generateGenreRelationQuery(genres, movieId) {
+  let genreRelationQuery = "INSERT INTO movies_with_genres (movie_id, genre_id) VALUES "
+  let genreRelationData = [];
+  genres.forEach(genre => {
+    genreRelationQuery += `(?, ?),`
+    genreRelationData.push(movieId, genre.genre_id)
+  })
+  genreRelationQuery = genreRelationQuery.slice(0, -1);
+  console.log("Genre Relation Query:", genreRelationQuery);
+  console.log("Genre Relation Data:", genreRelationData);
+  return [genreRelationQuery, genreRelationData]
+}
+
+function generateGenresSearchQuery(genres) {
+  let selectedGenresQuery = 'SELECT genre_id, genre_name FROM genres WHERE genre_name IN('
+  genres.forEach(genre => {
+    selectedGenresQuery += "?,"
+  })
+  selectedGenresQuery = selectedGenresQuery.slice(0, -1);
+  selectedGenresQuery += ");"
+  console.log("Genre Search Query:", selectedGenresQuery);
+  return selectedGenresQuery;
+}
 
 app.listen(3000, () => {
   console.log("Server läuft auf http://localhost:3000");
