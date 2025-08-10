@@ -4,14 +4,13 @@ import logo from "./images/watchbasev2.png";
 function Navbar({
   showLogin = () => {},
   loggedIn = false,
-  logOut = () => {},
-  setWatchList = () => {}, 
+  logOut = () => {},// enderung
 }) {
   return (
     <nav className="navbar navbar-expand-sm navbar-dark px-4">
       <div className="container-fluid">
-        <Link className="navbar-brand" to="/">
-          <img className="img-navbar" src={logo} alt="Watchbase" />
+        <Link className="navbar-brand" to="/">   {/* <Link to="/"> führt einen clientseitigen Seitenwechsel über die History-API (pushState) aus – ohne Neuladen der Seite, schnell und flüssig, und der Zustand bleibt erhalten. */}
+         <img className="img-navbar" src={logo} alt="Watchbase" />
         </Link>
 
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -33,7 +32,9 @@ function Navbar({
                 <Link className="nav-link" to="/watchlist">Watchlist</Link>
               </li>
             )}
-
+            <li className="nav-item">
+              <Link className="nav-link" to="/impressum">Impressum</Link>
+            </li>
             <li className="nav-item">
               <a
                 className="nav-link d-inline-block"
@@ -42,10 +43,6 @@ function Navbar({
               >
                 {loggedIn ? "Abmelden" : "Anmeldung"}
               </a>
-            </li>
-
-            <li className="nav-item">
-              <Link className="nav-link" to="/impressum">Impressum</Link>
             </li>
           </ul>
         </div>

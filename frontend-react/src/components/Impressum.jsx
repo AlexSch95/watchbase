@@ -21,7 +21,7 @@ export default function Impressum() {
 
         <p><strong>Kontakt:</strong><br />
           Telefon: +49 176 082 45 45<br />
-          E-Mail: <a href="mailto:olha.tkachuk@freenet.de">olha.tkachuk@freenet.de</a>
+          E-Mail: <a href="mailto:watchbase@freenet.de">watchbase@freenet.de</a>
         </p>
 
         <p><strong>Registereintrag:</strong><br />

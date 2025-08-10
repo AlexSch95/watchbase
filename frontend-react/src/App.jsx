@@ -4,6 +4,7 @@ import LoginModal from "./components/LoginModal";
 import RegisterModal from "./components/RegisterModal";
 import { useEffect, useState } from "react";
 
+//initialWatchlist – damit die Anwendung auf der Route /watchlist direkt mit der Watchlist-Ansicht startet.
 function App({ initialWatchlist = false }) {
   const [loginOpen, setLoginOpen] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false)
@@ -48,6 +49,7 @@ function App({ initialWatchlist = false }) {
     checkloggedIn();
   }, [])
 
+  //NEU
   const [watchList, setWatchList] = useState(initialWatchlist);
     useEffect(() => {
     setWatchList(initialWatchlist);
