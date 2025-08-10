@@ -4,7 +4,7 @@ import LoginModal from "./components/LoginModal";
 import RegisterModal from "./components/RegisterModal";
 import { useEffect, useState } from "react";
 
-function App() {
+function App({ initialWatchlist = false }) {
   const [loginOpen, setLoginOpen] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false)
   function hideLogin() {
@@ -48,7 +48,10 @@ function App() {
     checkloggedIn();
   }, [])
 
-  const [watchList, setWatchList] = useState(false);
+  const [watchList, setWatchList] = useState(initialWatchlist);
+    useEffect(() => {
+    setWatchList(initialWatchlist);
+  }, [initialWatchlist]);
 
   return (
     <>
