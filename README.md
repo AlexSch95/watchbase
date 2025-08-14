@@ -1,7 +1,6 @@
 <p align="center">
     <img src="https://i.imgur.com/ZplQ9Sf.png" alt="Logo" height=72>
   <p align="center">
-    Administrationstool für Watchbase
   </p>
 </p>
 
