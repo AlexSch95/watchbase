@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 function Navbar({ showLogin, loggedIn, logOut }) {
   const navigate = useNavigate();
   return (
-    <nav className="navbar navbar-expand-sm navbar-dark px-4">
+    <nav className="navbar navbar-expand-md navbar-dark px-4">
       <div className="container-fluid">
         <a className="navbar-brand" onClick={() => navigate('/')}>
           <img className="img-navbar" src={logo} alt="" />

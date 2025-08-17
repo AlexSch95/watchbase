@@ -6,6 +6,7 @@ import LoginModal from "./components/LoginModal";
 import RegisterModal from "./components/RegisterModal";
 import Home from "./Home";
 import Impressum from './Impressum';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 function App() {
   const [loginOpen, setLoginOpen] = useState(false);
