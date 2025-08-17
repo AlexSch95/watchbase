@@ -63,7 +63,7 @@ function App() {
         // setWatchList={setWatchList}
       />
       <Routes>
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/impressum" element={<Impressum />} />
         <Route path="/movies" element={
           <Movies
