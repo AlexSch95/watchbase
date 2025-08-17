@@ -268,3 +268,12 @@ body {
 .watch-button {
   width: 50px;
 }
+
+@media (max-width: 767px) { /* Bootstrap's "md" Breakpoint */
+  .navbar-collapse {
+    background-color: black !important;
+    padding: 1rem;
+    margin-top: 0.5rem; /* Optional: Abstand zum Toggler */
+    border-radius: 0.25rem; /* Optional: Abgerundete Ecken */
+  }
+}
