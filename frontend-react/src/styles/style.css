@@ -2,12 +2,11 @@
     outline: solid 1px white;
 } */
 
-body,
-html {
+body {
     height: 100%;
     font-family: "Rubik", sans-serif;
     color: white;
-    background-color: #111;
+    background-color: #111 url("../components/images/background-image.jpg") center center/cover no-repeat fixed;
 }
 
 .card {
@@ -65,16 +64,31 @@ html {
 }
 
 
-.background {
-    background-image: url("../images/background.png");
+.background-saturated {
+    background-image: url("../components/images/background-saturated.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    position: fixed;
+    background-attachment: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    min-height: 100%;
+    z-index: -2;
+}
+
+.background-desaturated {
+    background-image: url("../components/images/background-desaturated.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100%;
     z-index: -2;
 }
 

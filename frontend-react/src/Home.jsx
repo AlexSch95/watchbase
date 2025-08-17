@@ -1,12 +1,12 @@
 import logo from "./components/images/watchbasev2.png";
-import background from "./components/images/background.png"
+
 import { useNavigate } from 'react-router-dom';
 
 function Home() {
   const navigate = useNavigate();
   return (
     <>
-    <img className="background" src={background}/>
+    <div className="background-saturated">
     <div className="overlay"/>
 
       <div className="container text-center hero">
@@ -15,6 +15,7 @@ function Home() {
         <a onClick={() => navigate('/movies')} className="btn btn-danger mt-3">
           Jetzt kostenlos loslegen!
         </a>
+      </div>
       </div>
     </>
   );

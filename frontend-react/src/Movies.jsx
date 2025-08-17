@@ -116,6 +116,7 @@ function Movies({loggedIn, watchList}) {
   }
 
   return (
+    <div className="background-desaturated">
     <div className="container py-5">
       <Filter
         genres={genres}
@@ -140,6 +141,7 @@ function Movies({loggedIn, watchList}) {
           hideModal={hideModal}
         />
       }
+    </div>
     </div>
   );
 }
