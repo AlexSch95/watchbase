@@ -1,0 +1,270 @@
+/* :root * {
+    outline: solid 1px white;
+} */
+
+body {
+    height: 100%;
+    font-family: "Rubik", sans-serif;
+    color: white;
+    background-color: #111 url("../components/images/background-image.jpg") center center/cover no-repeat fixed;
+}
+
+.card {
+    background-color: #222;
+    border: 1px solid #444;
+    transition: transform 0.3s;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+
+}
+
+.card-img-top {
+    height: 800px;
+    object-fit: cover;
+    width: 100%;
+}
+
+
+
+
+.card:hover {
+    transform: scale(1.03);
+    cursor: pointer;
+}
+
+.movie-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: white;
+}
+
+.movie-meta {
+    font-size: 0.9rem;
+}
+
+.rating {
+    color: gold;
+}
+
+.year {
+    color: #f33;
+    font-weight: bold;
+}
+
+.genre-filter-box {
+    background-color: #000;
+    border-radius: 8px;
+    /* width: 250px; */
+    margin-left: 30px;
+}
+
+#genreFilter{
+  margin-right: 8px;
+}
+
+
+.background-saturated {
+    background-image: url("../components/images/background-saturated.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100%;
+    z-index: -2;
+}
+
+.background-desaturated {
+    background-image: url("../components/images/background-desaturated.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100%;
+    z-index: -2;
+}
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0.75);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.overlay.modal-overlay {
+  z-index: 1;
+  /* overflow: hidden; */
+}
+
+.modal {
+  z-index: 2;
+}
+
+.hero {
+    margin-top: 20vh;
+}
+
+.form-control::placeholder {
+    color: #ccc;
+}
+
+.img-navbar {
+  width: 200px;
+}
+
+.navbar-brand {
+    color: red !important;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.nav-link {
+    color: white !important;
+    font-weight: 600;
+}
+
+.nav-link:hover {
+    text-decoration: underline;
+}
+
+.btn-red {
+    background-color: red;
+    color: white;
+    border: none;
+}
+
+.btn-red:hover {
+    background-color: darkred;
+}
+
+.login-card {
+  max-width: 350px;
+  padding: 40px 40px;
+  background-color: #242424;
+  margin: 0 auto 25px;
+  margin-top: 50px;
+  border-radius: 2px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.login-card .profile-img-card {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 10px;
+  display: block;
+  border-radius: 50%;
+}
+
+.login-card .profile-name-card {
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  margin: 10px 0 0;
+  min-height: 1em;
+}
+
+.login-card .reauth-email {
+  display: block;
+  color: #404040;
+  line-height: 2;
+  margin-bottom: 10px;
+  font-size: 14px;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.login-card .form-signin input[type=email], .login-card .form-signin input[type=password], .login-card .form-signin input[type=text], .login-card .form-signin button {
+  height: 44px;
+  font-size: 16px;
+  width: 100%;
+  display: block;
+  margin-bottom: 10px;
+  z-index: 1;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.login-card .form-signin .form-control:focus {
+  border-color: rgb(255, 0, 0);
+  outline: 0;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgb(152, 16, 16);
+}
+
+
+.login-card .btn.btn-signin:hover, .login-card .btn.btn-signin:active, .login-card .btn.btn-signin:focus {
+  background: rgb(12, 97, 33);
+}
+
+@media (min-width: 576px) {
+  .rounded-nav {
+    border-radius: 50rem !important;
+  }
+}
+
+@media (min-width: 576px) {
+  .rounded-nav .nav-link {
+    border-radius: 50rem !important;
+  }
+}
+
+.with-arrow .nav-link.active {
+  position: relative;
+}
+
+.with-arrow .nav-link.active::after {
+  content: '';
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #ff0000;
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: block;
+}
+
+.lined .nav-link {
+  border: none;
+  border-bottom: 3px solid transparent;
+}
+
+.lined .nav-link:hover {
+  border: none;
+  border-bottom: 3px solid transparent;
+}
+
+.lined .nav-link.active {
+  background: none;
+  color: #555;
+  border-color: #ff0000;
+}
+
+.nav-pills .nav-link {
+  color: #555;
+}
+
+.text-uppercase {
+  letter-spacing: 0.1em;
+}
+
+#titleSearch {
+  width: 235px;
+}
+
+.watch-button {
+  width: 50px;
+}
