@@ -31,7 +31,8 @@ function RegisterModal({ hideRegister, showLogin }) {
     hideRegister();
   }
 
-  async function register() {
+  async function register(event) {
+    event.preventDefault();
     try {
       if (!checkPasswordEqual) {
         return console.log("Password mismatch");
